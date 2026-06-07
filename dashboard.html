@@ -15,6 +15,8 @@ nav{position:sticky;top:0;z-index:100;background:rgba(15,17,23,.96);backdrop-fil
 .logo{font-weight:800;font-size:15px;margin-right:12px;color:var(--accent);white-space:nowrap}
 .nav-btn{background:var(--tag-bg);border:1px solid var(--border);color:var(--text2);padding:5px 12px;border-radius:18px;cursor:pointer;font-size:12px;transition:.2s;white-space:nowrap}
 .nav-btn:hover,.nav-btn.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.nav-btn[data-t="generator"]{background:rgba(0,206,201,.12);color:var(--accent2);border-color:rgba(0,206,201,.25)}
+.nav-btn[data-t="generator"].on{background:var(--accent2);color:#222}
 .nav-btn[data-t="creative"]{background:rgba(253,203,110,.12);color:var(--gold);border-color:rgba(253,203,110,.25)}
 .nav-btn[data-t="creative"].on{background:var(--gold);color:#222}
 .nav-btn[data-t="batch"]{background:rgba(253,121,168,.12);color:var(--accent3);border-color:rgba(253,121,168,.25)}
@@ -60,7 +62,59 @@ details>.inner strong{color:var(--text)}.bl{border-left:3px solid var(--accent2)
 .stats{display:flex;gap:12px;margin-bottom:18px;flex-wrap:wrap}.stat{background:var(--card);border-radius:10px;padding:10px 16px;border:1px solid var(--border)}
 .stat-n{font-size:22px;font-weight:800;color:var(--gold)}.stat-l{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px}
 .prog-item{font-size:13px;padding:3px 0;color:var(--text2)}.prog-item.done{color:var(--green)}.prog-item.todo{color:var(--text3)}
-@media(max-width:768px){.g2,.g3{grid-template-columns:1fr}.checklist{columns:1}nav{padding:8px 10px}.sec{padding:20px 12px}}
+
+/* ---- Generator & Chat ---- */
+.gen-sel{display:flex;flex-wrap:wrap;gap:4px;padding:10px;background:var(--bg);border-radius:8px;min-height:36px;margin:10px 0;border:1px dashed var(--border);align-items:center}
+.gen-sel-tag{display:inline-flex;align-items:center;gap:3px;font-size:11px;padding:3px 8px 3px 10px;border-radius:12px;background:var(--accent2);color:#fff;cursor:pointer;transition:.15s}
+.gen-sel-tag:hover{background:var(--red)}
+.gen-opts{display:flex;gap:16px;margin:12px 0;font-size:13px;color:var(--text2);flex-wrap:wrap}
+.gen-opts label{cursor:pointer;display:flex;align-items:center;gap:4px}
+.gen-opts input{accent-color:var(--accent2)}
+.gen-match{background:var(--card);border-radius:8px;padding:12px 14px;margin:12px 0;border:1px solid var(--border);font-size:12px;color:var(--text2);line-height:1.7}
+.gen-match strong{color:var(--accent2);font-size:11px}
+.gen-result{background:var(--card);border-radius:12px;padding:16px;border:1px solid var(--border);transition:.2s}
+.gen-result:hover{border-color:var(--accent2)}
+.gen-result h3{color:var(--accent2);font-size:15px;margin-bottom:2px}
+.gen-meta{font-size:11px;color:var(--text3);margin-bottom:6px}
+.gen-story{font-size:13px;color:var(--text2);line-height:1.7;margin:8px 0}
+.gen-acts{display:flex;gap:6px;margin-top:10px}
+.gen-acts button{padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text2);font-size:12px;cursor:pointer;transition:.2s}
+.gen-acts button:hover{border-color:var(--accent2);color:var(--accent2)}
+.gen-acts .primary{background:var(--accent2);color:#fff;border-color:var(--accent2)}
+.gen-acts .primary:hover{background:#00b5ad}
+.gen-btn{padding:10px 24px;font-size:14px;font-weight:700;border-radius:10px;border:1px solid var(--accent2);background:var(--accent2);color:#fff;cursor:pointer;transition:.2s}
+.gen-btn:hover{background:#00b5ad}
+.gen-btn:disabled{opacity:.4;cursor:not-allowed}
+.gen-loading{text-align:center;padding:40px;color:var(--accent2);font-size:14px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.gen-loading::after{content:'';display:inline-block;width:16px;height:16px;border:2px solid var(--accent2);border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;margin-left:8px;vertical-align:middle}
+.gen-api{background:var(--card);border-radius:8px;padding:12px;margin-bottom:14px;border:1px solid var(--border);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.gen-api input[type=password],.gen-api input[type=text]{background:var(--bg);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:6px;font-size:13px;width:320px}
+.gen-api button{padding:5px 12px;border-radius:6px;border:1px solid var(--accent2);background:rgba(0,206,201,.12);color:var(--accent2);font-size:12px;cursor:pointer}
+.gen-api button:hover{background:var(--accent2);color:#fff}
+.gen-api .status{font-size:12px;margin-left:4px}
+/* Chat */
+.chat-wrap{display:flex;flex-direction:column;height:520px;background:var(--card);border-radius:12px;border:1px solid var(--border);overflow:hidden;margin-top:12px}
+.chat-concept{padding:14px 16px;border-bottom:1px solid var(--border);background:var(--card2)}
+.chat-concept h3{font-size:14px;color:var(--accent2);margin-bottom:4px}
+.chat-concept p{font-size:12px;color:var(--text2);line-height:1.5}
+.chat-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
+.chat-msg{max-width:82%;padding:10px 14px;border-radius:12px;font-size:13px;line-height:1.7;word-break:break-word;white-space:pre-wrap}
+.chat-msg.user{align-self:flex-end;background:var(--accent);color:#fff;border-bottom-right-radius:4px;white-space:normal}
+.chat-msg.ai{align-self:flex-start;background:var(--bg);color:var(--text2);border-bottom-left-radius:4px;border:1px solid var(--border);white-space:normal}
+.chat-msg.ai strong{color:var(--text)}
+.chat-msg.ai h3,.chat-msg.ai h4{color:var(--accent2);margin:8px 0 4px;font-size:13px}
+.chat-msg.ai ul,.chat-msg.ai ol{padding-left:18px;margin:4px 0}
+.chat-input-wrap{display:flex;gap:8px;padding:12px;border-top:1px solid var(--border);background:var(--card2)}
+.chat-input-wrap textarea{flex:1;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:8px 12px;border-radius:8px;font-size:13px;resize:none;font-family:inherit;min-height:42px;max-height:120px}
+.chat-input-wrap textarea:focus{outline:none;border-color:var(--accent2)}
+.chat-input-wrap button{padding:8px 18px;border-radius:8px;border:none;background:var(--accent2);color:#fff;font-size:13px;cursor:pointer;white-space:nowrap;align-self:flex-end}
+.chat-input-wrap button:hover{background:#00b5ad}
+.chat-input-wrap button:disabled{opacity:.5;cursor:not-allowed}
+.chat-loading{color:var(--accent2);font-size:12px;padding:8px 14px;align-self:flex-start}
+.chat-loading::after{content:'';display:inline-block;width:12px;height:12px;border:2px solid var(--accent2);border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;margin-left:6px;vertical-align:middle}
+
+@media(max-width:768px){.g2,.g3{grid-template-columns:1fr}.checklist{columns:1}nav{padding:8px 10px}.sec{padding:20px 12px}.gen-api input[type=password],.gen-api input[type=text]{width:200px}}
 </style>
 </head>
 <body>
@@ -73,6 +127,7 @@ details>.inner strong{color:var(--text)}.bl{border-left:3px solid var(--accent2)
 <button class="nav-btn" data-t="rules">📐 规律</button>
 <button class="nav-btn" data-t="structures">🏗️ 结构</button>
 <button class="nav-btn" data-t="directions">🧭 方向</button>
+<button class="nav-btn" data-t="generator">🎰 生成器</button>
 <button class="nav-btn" data-t="creative">🎨 创意工坊</button>
 <button class="nav-btn" data-t="batch">🎲 批量创意</button>
 </nav>
@@ -81,9 +136,10 @@ details>.inner strong{color:var(--text)}.bl{border-left:3px solid var(--accent2)
 <div class="sec" id="s-cases"><h1>🔬 AI短片案例分析</h1><p class="sub">两个病毒式传播的AI动画短片深度拆解 + 经典对标 + 6条核心规律</p><div id="r-cases"></div></div>
 <div class="sec" id="s-works"><h1>📦 作品库 <span id="works-total" style="font-size:14px;color:var(--text3);font-weight:400"></span></h1><p class="sub">多维筛选：类型 × 画风 × 技法 × 材质 × 来源 × 对白，展开查看完整剧情与分析</p><div id="r-works-filters"></div><div class="count" id="r-works-count"></div><div class="grid g2" id="r-works-grid"></div></div>
 <div class="sec" id="s-channels"><h1>📺 头部账号 Top3</h1><p class="sub">6个标杆频道 × 3部代表作品</p><div id="r-channels"></div></div>
-<div class="sec" id="s-rules"><h1>📐 规律与公式</h1><p class="sub">10+条核心规律 + V2.0创作公式 + 检查清单</p><div id="r-rules"></div></div>
+<div class="sec" id="s-rules"><h1>📐 规律与公式</h1><p class="sub">15条规律 + V3.0创作公式 + 检查清单</p><div id="r-rules"></div></div>
 <div class="sec" id="s-structures"><h1>🏗️ 七种叙事结构</h1><p class="sub">适合2分钟以下的可复用叙事模板</p><div class="frow" id="r-struct-tabs"></div><div class="card" id="r-struct-display"></div></div>
-<div class="sec" id="s-directions"><h1>🧭 5个创作方向</h1><p class="sub">按成功概率排序</p><div class="grid g3" id="r-dir-grid"></div></div>
+<div class="sec" id="s-directions"><h1>🧭 7个创作方向</h1><p class="sub">按成功概率排序</p><div class="grid g3" id="r-dir-grid"></div></div>
+<div class="sec" id="s-generator"><h1>🎰 故事生成器</h1><p class="sub">选择2-6个标签组合你的故事DNA，AI自动生成3-5个故事梗概 · 支持规律轮盘 / DNA混搭 / 一键对标</p><div id="r-generator"></div></div>
 <div class="sec" id="s-creative"><h1>🎨 创意工坊</h1><p class="sub">从原始想法到可执行剧本的完整迭代记录</p><div id="r-creative"></div></div>
 <div class="sec" id="s-batch"><h1>🎲 批量创意库</h1><p class="sub">V2.0公式拼配，点击展开完整故事</p><div class="stats" id="r-batch-stats"></div><div class="frow" id="r-batch-filters"></div><div class="count" id="r-batch-count"></div><div class="grid g2" id="r-batch-grid"></div></div>
 
@@ -93,6 +149,7 @@ details>.inner strong{color:var(--text)}.bl{border-left:3px solid var(--accent2)
 <script src="data/batch-ideas.js"></script>
 <script src="data/research.js"></script>
 <script src="data/rules.js"></script>
+<script src="data/generator-config.js"></script>
 <script>
 // ---- NAV ----
 document.querySelectorAll('.nav-btn').forEach(btn=>btn.addEventListener('click',()=>{
@@ -128,11 +185,11 @@ function makeTags(cat,arr){return (arr||[]).map(v=>makeTag(cat,v)).join('')}
   h+=`<div class="formula" style="margin-top:16px"><h3>V1.0 公式</h3><code>${ca.formula_v1}</code></div>`;
   h+=`<h2 style="font-size:18px;margin:20px 0 12px;color:var(--accent)">🏆 电影节 vs 流媒体偏好对比</h2><table class="tbl"><tr><th>维度</th><th>电影节</th><th>流媒体</th></tr>${festivalInsights.festivalVsStreaming.map(f=>`<tr><td><strong>${f.dim}</strong></td><td>${f.festival}</td><td>${f.streaming}</td></tr>`).join('')}</table>`;
   h+=`<details style="margin-top:14px"><summary style="font-size:14px;font-weight:700;color:var(--green)">✅ 交叉区域</summary><div class="inner"><ul style="padding-left:16px">${festivalInsights.crossoverFeatures.map(f=>'<li>'+f+'</li>').join('')}</ul></div></details>`;
-  h+=`<details style="margin-top:10px"><summary style="font-size:14px;font-weight:700;color:var(--gold)">📐 压缩至2min的5种模式</summary><div class="inner"><table class="tbl"><tr><th>模式</th><th>代表</th><th>策略</th></tr>${festivalInsights.compressPatterns.map(p=>`<tr><td><strong>${p.pattern}</strong></td><td>${p.works}</td><td>${p.strategy}</td></tr>`).join('')}</table></div></details>`;
+  h+=`<details style="margin-top:10px"><summary style="font-size:14px;font-weight:700;color:var(--gold)">📐 压缩至2min的模式</summary><div class="inner"><table class="tbl"><tr><th>模式</th><th>代表</th><th>策略</th></tr>${festivalInsights.compressPatterns.map(p=>`<tr><td><strong>${p.pattern}</strong></td><td>${p.works}</td><td>${p.strategy}</td></tr>`).join('')}</table></div></details>`;
   document.getElementById('r-cases').innerHTML=h;
 })();
 
-// ---- 3. WORKS (with tagRegistry-driven filters) ----
+// ---- 3. WORKS ----
 let wF={type:'all',artStyle:'all',technique:'all',texture:'all',source:'all',dialogue:'all'};
 function renderWorksFilters(){
   const filterCats=['type','artStyle','technique','texture','source','dialogue'];
@@ -183,11 +240,11 @@ function renderWorksGrid(){
   document.getElementById('r-channels').innerHTML=h;
 })();
 
-// ---- 5. RULES (data-driven from rules.js) ----
+// ---- 5. RULES ----
 (function(){
   let h='';
-  h+=`<div class="formula" style="border-color:var(--gold)"><h3 style="color:var(--gold)">V2.0 公式（含AIGC约束）</h3><code>${formulaV2}</code></div>`;
-  h+=`<div class="formula" style="border-color:var(--accent2)"><h3>✅ 检查清单 V2.0</h3><div class="checklist">${checklist.map(c=>`<label><input type="checkbox"> ${c}</label>`).join('')}</div></div>`;
+  h+=`<div class="formula" style="border-color:var(--gold)"><h3 style="color:var(--gold)">V3.0 公式</h3><code>${formulaV2}</code></div>`;
+  h+=`<div class="formula" style="border-color:var(--accent2)"><h3>✅ 检查清单 V3.0</h3><div class="checklist">${checklist.map(c=>`<label><input type="checkbox"> ${c}</label>`).join('')}</div></div>`;
   h+=`<h2 style="font-size:18px;margin:18px 0 12px">📐 ${rules.length}条规律</h2><div class="grid g2">${rules.map(r=>`<div class="card"><h3 style="color:var(--accent);font-size:14px;margin-bottom:6px">${r.title}</h3><p style="font-size:12px;color:var(--text2);line-height:1.5">${r.content}</p>${r.detail?`<details><summary>展开详情</summary><div class="inner">${r.detail}</div></details>`:''}</div>`).join('')}</div>`;
   document.getElementById('r-rules').innerHTML=h;
 })();
@@ -233,8 +290,409 @@ function renderBG(){
   document.getElementById('r-batch-grid').innerHTML=data.map(b=>`<div class="b-card"><div class="b-head" onclick="this.nextElementSibling.classList.toggle('open')"><div class="b-num">#${b.num}</div><div class="b-title">${b.title}</div><div class="b-liner">${b.liner}</div><div style="margin-top:6px"><span class="tag" style="background:#e17055">🐾 ${b.tags.char}</span><span class="tag" style="background:#6c5ce7">🎭 ${b.tags.type}</span><span class="tag" style="background:#636e72">🏗 ${b.tags.struct}</span><span class="tag" style="background:#fdcb6e;color:#222">🎨 ${b.tags.vis}</span></div></div><div class="b-body"><div class="b-sec"><div class="b-sec-t st">📖 完整故事</div><div class="b-txt" style="border-left:3px solid var(--accent2)">${nl2br(b.story)}</div></div><div class="b-sec"><div class="b-sec-t hl">💡 亮点</div><div class="b-txt" style="border-left:3px solid var(--gold)">${b.highlights}</div></div><div class="b-sec"><div class="b-sec-t cm">🎬 镜头</div><div class="b-txt" style="border-left:3px solid var(--accent)">${b.camera}</div></div><div class="b-sec"><div class="b-sec-t ar">🎨 美术</div><div class="b-txt" style="border-left:3px solid var(--accent3)">${b.art}</div></div></div></div>`).join('');
 }
 
+// ============================================================
+// ---- 10. GENERATOR (Tag Combinator + AI Generation + Chat) ----
+// ============================================================
+
+// 10a. State
+let genView='generate'; // 'generate' | 'workshop'
+let genSel=[];           // [{cat:'type',val:'slapstick'}, ...]
+let genOpts={roulette:true, dnaMix:true, benchmark:true};
+let genMatched=null;
+let genResults=[];
+let genLoading=false;
+// Workshop chat state
+let wsItem=null;
+let wsMsgs=[];
+let wsLoading=false;
+
+// 10b. Persistence
+function getApiKey(){return localStorage.getItem('dash_apiKey')||''}
+function setApiKey(k){localStorage.setItem('dash_apiKey',k)}
+
+// 10c. Label helpers
+function genTagLabel(cat,val){
+  if(generatorTags[cat]) return generatorTags[cat].options[val]||val;
+  if(cat==='structure'){const s=structures.find(x=>x.id===val);return s?s.id+'. '+s.name:val;}
+  const r=tagRegistry[cat]; return r?.options[val]?.label||val;
+}
+function genCatLabel(cat){
+  if(generatorTags[cat]) return generatorTags[cat].label;
+  if(cat==='structure') return '🏗️ 结构';
+  return tagRegistry[cat]?.label||cat;
+}
+
+// 10d. Tag selection
+function toggleGenTag(cat,val){
+  const idx=genSel.findIndex(t=>t.cat===cat&&t.val===val);
+  if(idx>=0) genSel.splice(idx,1);
+  else if(genSel.length<6) genSel.push({cat,val});
+  genResults=[]; renderGenerator();
+}
+function removeGenTag(i){ genSel.splice(i,1); genResults=[]; renderGenerator(); }
+
+// 10e. Smart matching
+function smartMatch(){
+  // Build search terms from selected tags
+  const terms=[];
+  genSel.forEach(t=>{
+    terms.push(t.val.toLowerCase());
+    if(t.cat==='protagonist' && protagonistKW[t.val]) terms.push(...protagonistKW[t.val]);
+    else if(t.cat==='emotion' && emotionKW[t.val]) terms.push(...emotionKW[t.val]);
+    else if(t.cat==='structure'){const s=structures.find(x=>x.id===t.val);if(s)terms.push(s.name);}
+    else{const r=tagRegistry[t.cat];if(r?.options[t.val])terms.push(r.options[t.val].label.replace(/[^\w\u4e00-\u9fff]/g,''));}
+  });
+  const lterms=terms.map(t=>t.toLowerCase()).filter(Boolean);
+
+  function score(text){
+    const lc=text.toLowerCase();
+    return lterms.reduce((s,t)=>s+(lc.includes(t)?1:0),0);
+  }
+
+  // Match works
+  const sw=works.map(w=>({w,s:score([w.title,w.plot,w.keywords||'',...(w.type||[]),...(w.artStyle||[])].join(' '))})).sort((a,b)=>b.s-a.s);
+  const topW=sw.filter(x=>x.s>0).slice(0,5).map(x=>x.w);
+  const ids=new Set(topW.map(w=>w.id));
+  const randW=sw.filter(x=>!ids.has(x.w.id)).map(x=>x.w).sort(()=>Math.random()-.5).slice(0,3);
+
+  // Match rules
+  const sr=rules.map(r=>({r,s:score([r.title,r.content,r.detail||''].join(' '))})).sort((a,b)=>b.s-a.s);
+  const topR=sr.slice(0,5).map(x=>x.r);
+  [1,11].forEach(id=>{if(!topR.find(r=>r.id===id)){const f=rules.find(r=>r.id===id);if(f)topR.push(f);}});
+
+  // Match batch ideas
+  const sb=batchIdeas.map(b=>({b,s:score([b.title,b.liner,...Object.values(b.tags)].join(' '))})).sort((a,b)=>b.s-a.s);
+  const topB=sb.filter(x=>x.s>0).slice(0,5).map(x=>x.b);
+
+  return {works:topW, randomWorks:randW, rules:topR, batch:topB};
+}
+
+// 10f. Prompt building
+function buildGenSystemPrompt(matched){
+  let s=`你是一个顶级动画短片创意总监。专长：创作2分钟以下、面向北美流媒体平台的动画短片。\n\n`;
+  s+=`## 创作方法论 V3.0\n${formulaV3}\n\n`;
+  s+=`## 检查清单(12项)\n${checklist.map((c,i)=>(i+1)+'. '+c).join('\n')}\n\n`;
+  s+=`## 核心规律(最相关)\n`;
+  matched.rules.forEach(r=>{s+=`- ${r.title}: ${r.content}\n`});
+  s+=`\n## 参考作品(匹配度最高)\n`;
+  matched.works.forEach(w=>{s+=`- 《${w.title}》(${w.creator}, ${w.duration}): ${w.plot}\n`});
+  if(matched.randomWorks.length){
+    s+=`\n## DNA混搭备选(低匹配可产生意外火花)\n`;
+    matched.randomWorks.forEach(w=>{s+=`- 《${w.title}》: ${w.plot}\n`});
+  }
+  if(matched.batch.length){
+    s+=`\n## 已有创意(避免重复)\n`;
+    matched.batch.forEach(b=>{s+=`- #${b.num} ${b.title}: ${b.liner}\n`});
+  }
+  return s;
+}
+
+function buildGenUserPrompt(){
+  let u=`我选择了以下创作DNA：\n`;
+  genSel.forEach(t=>{u+=`- ${genCatLabel(t.cat)}: ${genTagLabel(t.cat,t.val)}\n`});
+  u+=`\n请生成5个完全不同的故事梗概。\n\n要求：\n`;
+  if(genOpts.roulette) u+=`- 【规律轮盘】每个故事使用不同的规律作为核心驱动\n`;
+  if(genOpts.dnaMix) u+=`- 【DNA混搭】每个故事从参考作品+备选池中选2部做DNA混搭\n`;
+  if(genOpts.benchmark) u+=`- 【一键对标】标注每个故事最像参考作品中的哪一部\n`;
+  u+=`- 必须大胆创新，不能和已有创意重复\n- 优先考虑AI动画可实现性(≤2主角, ≤10镜头)\n\n`;
+  u+=`严格按以下格式输出，每个梗概用 === 分隔：\n\n`;
+  u+=`===\n标题: 中文标题 / English Title\n一句话: (≤20字概念)\n核心规律: 规律X - 名称\nDNA混搭: 《作品A》 × 《作品B》\n最像: 《作品名》\n记忆点: (一句话最强视觉记忆点)\n梗概:\n(200字剧情，包含开头-发展-结尾)\n检查清单:\n`;
+  checklist.forEach(c=>{u+=`- ✅/❌ ${c}\n`});
+  u+=`===\n`;
+  return u;
+}
+
+function buildChatSystemPrompt(){
+  let s=`你是一个资深动画短片编剧导师，正在和用户共创一个动画短片剧本。\n\n`;
+  s+=`## 当前剧本\n标题: ${wsItem.title||'未命名'}\n概念: ${wsItem.liner||''}\n梗概: ${wsItem.story||''}\n\n`;
+  s+=`## 创作方法论 V3.0\n${formulaV3}\n\n`;
+  s+=`## 检查清单\n${checklist.map((c,i)=>(i+1)+'. '+c).join('\n')}\n\n`;
+  s+=`## 核心规律速查\n`;
+  rules.slice(0,8).forEach(r=>{s+=`- ${r.title}: ${r.content}\n`});
+  s+=`\n## 导师要求\n`;
+  s+=`1. 认真倾听用户反馈，精确理解修改意图\n`;
+  s+=`2. 每次修改解释理由（引用具体规律编号）\n`;
+  s+=`3. 输出修改后的完整200字梗概（不是片段）\n`;
+  s+=`4. 标注检查清单评分变化（X/12 → Y/12）\n`;
+  s+=`5. 如果用户想法有问题（太复杂、文化壁垒），善意提醒\n`;
+  s+=`6. 保持创意热情，鼓励大胆尝试\n`;
+  s+=`7. 用Markdown格式组织输出\n`;
+  return s;
+}
+
+// 10g. API calls
+async function callAPI(system,messages){
+  const key=getApiKey();
+  if(!key) throw new Error('请先设置API Key');
+  try{
+    const resp=await fetch('/api/generate',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({apiKey:key, system, messages, max_tokens:4096})
+    });
+    if(!resp.ok){
+      const err=await resp.json().catch(()=>({error:`HTTP ${resp.status}`}));
+      const msg=typeof err.error==='string'?err.error:JSON.stringify(err.error);
+      throw new Error(msg);
+    }
+    const data=await resp.json();
+    return data.content?.[0]?.text||'';
+  }catch(e){
+    if(e.message==='Failed to fetch'||e.message.includes('NetworkError'))
+      throw new Error('无法连接服务器。请确保已运行: python3 server.py');
+    throw e;
+  }
+}
+
+// 10h. Response parsing
+function parseGenResponse(text){
+  const blocks=text.split('===').filter(b=>b.trim().length>30);
+  return blocks.map(block=>{
+    const c={};
+    const lines=block.trim().split('\n');
+    let field=null, story=[], checks=[];
+    lines.forEach(line=>{
+      const l=line.trim();
+      if(l.startsWith('标题:'))      c.title=l.slice(3).trim();
+      else if(l.startsWith('一句话:'))c.liner=l.slice(4).trim();
+      else if(l.startsWith('核心规律:'))c.rule=l.slice(5).trim();
+      else if(l.startsWith('DNA混搭:'))c.dna=l.slice(5).trim();
+      else if(l.startsWith('最像:'))   c.benchmark=l.slice(3).trim();
+      else if(l.startsWith('记忆点:')) c.visual=l.slice(4).trim();
+      else if(l.startsWith('梗概:'))   field='story';
+      else if(l.startsWith('检查清单:'))field='check';
+      else if(field==='story' && !l.startsWith('- ✅') && !l.startsWith('- ❌')) story.push(l);
+      else if(l.startsWith('- ✅')||l.startsWith('- ❌')){field='check';checks.push(l);}
+    });
+    c.story=story.join('\n').trim();
+    c.checklist=checks;
+    c.checklistScore=checks.filter(l=>l.includes('✅')).length;
+    return c;
+  }).filter(c=>c.title||c.story);
+}
+
+// 10i. Render: Generate mode
+function renderGenerator(){
+  if(genView==='workshop') return renderWorkshop();
+  const el=document.getElementById('r-generator');
+  const key=getApiKey();
+  let h='';
+
+  // API Key
+  h+=`<div class="gen-api">
+    <span style="font-size:12px;font-weight:700;color:var(--accent2)">🔑 Claude API Key</span>
+    <input type="password" id="gen-api-input" value="${key}" placeholder="sk-ant-api03-...">
+    <button onclick="setApiKey(document.getElementById('gen-api-input').value);renderGenerator()">保存</button>
+    <span class="status" style="color:${key?'var(--green)':'var(--text3)'}">${key?'✅ 已保存':'未设置'}</span>
+  </div>`;
+
+  // Tag categories
+  const cats=[
+    {key:'protagonist', opts:generatorTags.protagonist.options},
+    {key:'type', opts:Object.fromEntries(genTypeSubset.map(k=>[k,tagRegistry.type.options[k]?.label||k]))},
+    {key:'artStyle', opts:Object.fromEntries(genArtSubset.map(k=>[k,tagRegistry.artStyle.options[k]?.label||k]))},
+    {key:'emotion', opts:generatorTags.emotion.options},
+    {key:'structure', opts:Object.fromEntries(structures.map(s=>[s.id,s.id+'. '+s.name]))},
+    {key:'duration', opts:generatorTags.duration.options},
+  ];
+
+  cats.forEach(c=>{
+    h+=`<div class="frow"><span class="frow-label">${genCatLabel(c.key)}</span>`;
+    Object.entries(c.opts).forEach(([k,lbl])=>{
+      const sel=genSel.some(t=>t.cat===c.key&&t.val===k);
+      h+=`<button class="fbtn${sel?' on':''}" onclick="toggleGenTag('${c.key}','${k}')">${lbl}</button>`;
+    });
+    h+=`</div>`;
+  });
+
+  // Selected tags bar
+  h+=`<div class="gen-sel">`;
+  if(!genSel.length) h+=`<span style="color:var(--text3);font-size:12px">👆 点击上方标签，选择2-6个组合你的故事DNA</span>`;
+  else genSel.forEach((t,i)=>{h+=`<span class="gen-sel-tag" onclick="removeGenTag(${i})" title="点击移除">${genTagLabel(t.cat,t.val)} ✕</span>`});
+  h+=`<span style="margin-left:auto;font-size:11px;color:${genSel.length>=2?'var(--green)':'var(--text3)'};font-weight:700">${genSel.length}/6</span></div>`;
+
+  // Options
+  h+=`<div class="gen-opts">
+    <label><input type="checkbox" ${genOpts.roulette?'checked':''} onchange="genOpts.roulette=this.checked"> 🎰 规律轮盘 <span style="font-size:10px;color:var(--text3)">(每个故事用不同规律)</span></label>
+    <label><input type="checkbox" ${genOpts.dnaMix?'checked':''} onchange="genOpts.dnaMix=this.checked"> 🧬 DNA混搭 <span style="font-size:10px;color:var(--text3)">(随机混搭参考作品)</span></label>
+    <label><input type="checkbox" ${genOpts.benchmark?'checked':''} onchange="genOpts.benchmark=this.checked"> 📊 一键对标 <span style="font-size:10px;color:var(--text3)">(标注最像哪部作品)</span></label>
+  </div>`;
+
+  // Generate button
+  const canGen=genSel.length>=2 && key;
+  h+=`<div style="margin:14px 0;display:flex;align-items:center;gap:12px">
+    <button class="gen-btn" ${canGen?'onclick="doGenerate()"':'disabled'}>🎲 生成 3-5 个故事梗概</button>`;
+  if(!key) h+=`<span style="font-size:12px;color:var(--red)">← 请先设置API Key，然后运行 <code>python3 server.py</code></span>`;
+  else if(genSel.length<2) h+=`<span style="font-size:12px;color:var(--text3)">← 至少选择2个标签</span>`;
+  h+=`</div>`;
+
+  // Match info
+  if(genSel.length>=2){
+    genMatched=smartMatch();
+    h+=`<div class="gen-match">`;
+    h+=`<div style="margin-bottom:4px"><strong>📐 匹配规律：</strong>${genMatched.rules.map(r=>`<span class="pill" style="margin:2px">${r.title.replace(/规律\d+[：:]/,'')}</span>`).join('')}</div>`;
+    h+=`<div style="margin-bottom:4px"><strong>📦 参考作品：</strong>${genMatched.works.map(w=>`<span style="color:var(--text)">${w.title}</span>`).join(' · ')}</div>`;
+    if(genMatched.randomWorks.length) h+=`<div style="margin-bottom:4px"><strong>🧬 混搭备选：</strong><span style="color:var(--accent3)">${genMatched.randomWorks.map(w=>w.title).join(' · ')}</span></div>`;
+    if(genMatched.batch.length) h+=`<div><strong>🎲 类似创意：</strong>${genMatched.batch.map(b=>`#${b.num} ${b.title}`).join(' · ')}</div>`;
+    h+=`</div>`;
+  }
+
+  // Loading or Results
+  if(genLoading){
+    h+=`<div class="gen-loading">正在生成故事创意，请稍候（约15-30秒）...</div>`;
+  }else if(genResults.length){
+    h+=`<h2 style="font-size:16px;color:var(--accent2);margin:18px 0 12px">🎯 生成结果 (${genResults.length}个)</h2>`;
+    h+=`<div class="grid g2">`;
+    genResults.forEach((c,i)=>{
+      const hasError=c.title?.startsWith('❌')||c.title?.startsWith('⚠️');
+      h+=`<div class="gen-result" ${hasError?'style="border-color:var(--red)"':''}>`;
+      h+=`<h3>${c.title||'未命名'}</h3>`;
+      if(c.rule||c.dna) h+=`<div class="gen-meta">${c.rule||''} ${c.dna?' · '+c.dna:''}</div>`;
+      if(c.liner) h+=`<p style="font-size:12px;color:var(--gold);margin:4px 0">💡 ${c.liner}</p>`;
+      h+=`<div class="gen-story">${(c.story||'').replace(/\n/g,'<br>')}</div>`;
+      if(c.visual) h+=`<p style="font-size:11px;color:var(--accent2);margin:4px 0">🎬 记忆点: ${c.visual}</p>`;
+      if(c.benchmark) h+=`<p style="font-size:11px;color:var(--text3)">📊 最像: ${c.benchmark}</p>`;
+      if(c.checklist?.length) h+=`<div style="font-size:11px;color:var(--text3);margin:6px 0">${c.checklist.join(' ')}</div>`;
+      if(c.checklistScore!==undefined) h+=`<div style="font-size:12px;color:var(--green);font-weight:700">✅ ${c.checklistScore}/12</div>`;
+      if(!hasError){
+        h+=`<div class="gen-acts">
+          <button class="primary" onclick="selectForWorkshop(${i})">👍 选入共创</button>
+          <button onclick="doVariant(${i})">🔄 变体</button>
+        </div>`;
+      }
+      h+=`</div>`;
+    });
+    h+=`</div>`;
+  }
+
+  el.innerHTML=h;
+}
+
+// 10j. Render: Workshop (chat) mode
+function renderWorkshop(){
+  const el=document.getElementById('r-generator');
+  if(!wsItem){genView='generate';return renderGenerator();}
+  let h='';
+
+  // Back button
+  h+=`<div style="display:flex;gap:10px;margin-bottom:12px;align-items:center">
+    <button class="fbtn" onclick="genView='generate';renderGenerator()">← 返回生成器</button>
+    <span style="font-size:13px;color:var(--accent2);font-weight:700">💬 AI共创对话</span>
+  </div>`;
+
+  // Concept card
+  h+=`<div class="chat-concept">
+    <h3>${wsItem.title||'未命名'}</h3>
+    <p><strong style="color:var(--gold)">${wsItem.liner||''}</strong></p>
+    <details><summary style="font-size:11px;color:var(--accent2);margin-top:4px">展开完整梗概</summary>
+    <div style="font-size:12px;color:var(--text2);padding:8px 0;line-height:1.7">${(wsItem.story||'').replace(/\n/g,'<br>')}</div>
+    </details>
+    ${wsItem.rule?`<div style="font-size:11px;color:var(--text3);margin-top:4px">📐 ${wsItem.rule} ${wsItem.dna?' · 🧬 '+wsItem.dna:''}</div>`:''}
+  </div>`;
+
+  // Chat
+  h+=`<div class="chat-wrap">`;
+  h+=`<div class="chat-msgs" id="chat-msgs">`;
+  wsMsgs.forEach(m=>{
+    if(m.role==='user') h+=`<div class="chat-msg user">${escHtml(m.content)}</div>`;
+    else h+=`<div class="chat-msg ai">${formatMd(m.content)}</div>`;
+  });
+  if(wsLoading) h+=`<div class="chat-loading">💭 思考中...</div>`;
+  h+=`</div>`;
+  h+=`<div class="chat-input-wrap">
+    <textarea id="chat-input" placeholder="输入你的想法或修改意见... (Enter发送, Shift+Enter换行)" rows="2"
+      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();doChat()}"></textarea>
+    <button onclick="doChat()" ${wsLoading?'disabled':''}>发送</button>
+  </div>`;
+  h+=`</div>`;
+
+  el.innerHTML=h;
+  const msgs=document.getElementById('chat-msgs');
+  if(msgs) msgs.scrollTop=msgs.scrollHeight;
+}
+
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>')}
+function formatMd(s){
+  return s
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\n/g,'<br>')
+    .replace(/### (.*?)(<br>)/g,'<h4 style="color:var(--accent2);margin:10px 0 4px">$1</h4>')
+    .replace(/## (.*?)(<br>)/g,'<h3 style="color:var(--accent2);margin:12px 0 6px">$1</h3>')
+    .replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')
+    .replace(/`(.*?)`/g,'<code>$1</code>')
+    .replace(/✅/g,'<span style="color:var(--green)">✅</span>')
+    .replace(/❌/g,'<span style="color:var(--red)">❌</span>');
+}
+
+// 10k. Actions
+async function doGenerate(){
+  if(genLoading||genSel.length<2||!getApiKey()) return;
+  genLoading=true; genResults=[]; renderGenerator();
+  try{
+    const matched=smartMatch();
+    const sys=buildGenSystemPrompt(matched);
+    const usr=buildGenUserPrompt();
+    const text=await callAPI(sys,[{role:'user',content:usr}]);
+    genResults=parseGenResponse(text);
+    if(!genResults.length) genResults=[{title:'⚠️ 解析失败',story:'AI返回了内容但格式不匹配。原始输出：\n\n'+text,liner:'请调整标签重试',checklist:[],checklistScore:0}];
+  }catch(e){
+    genResults=[{title:'❌ 生成失败',story:e.message,liner:'请检查API Key和网络连接',checklist:[],checklistScore:0}];
+  }
+  genLoading=false; renderGenerator();
+}
+
+async function doVariant(idx){
+  const concept=genResults[idx];
+  if(!concept||genLoading) return;
+  genLoading=true; renderGenerator();
+  try{
+    const matched=smartMatch();
+    const sys=buildGenSystemPrompt(matched);
+    const usr=`基于这个概念生成3个变体（保留核心元素但改变角度/结构/风格）：\n\n标题: ${concept.title}\n概念: ${concept.liner}\n梗概: ${concept.story}\n\n输出格式与之前相同，每个用===分隔。`;
+    const text=await callAPI(sys,[{role:'user',content:usr}]);
+    const variants=parseGenResponse(text);
+    if(variants.length) genResults.push(...variants);
+    else genResults.push({title:'⚠️ 变体生成失败',story:text,liner:'',checklist:[],checklistScore:0});
+  }catch(e){
+    genResults.push({title:'❌ 变体失败',story:e.message,liner:'',checklist:[],checklistScore:0});
+  }
+  genLoading=false; renderGenerator();
+}
+
+function selectForWorkshop(idx){
+  wsItem={...genResults[idx]};
+  wsMsgs=[];
+  genView='workshop';
+  // Auto-send initial analysis request
+  wsMsgs.push({role:'user',content:'我选择了这个概念进行深化。请从以下几个方面分析：\n1. 优点（哪些地方做得好）\n2. 弱点（哪些方面可以改进）\n3. 3-5条具体改进建议（引用对应的规律编号）\n4. 当前检查清单评分与改进后预期评分'});
+  renderWorkshop();
+  doChatSend();
+}
+
+async function doChat(){
+  const input=document.getElementById('chat-input');
+  if(!input||!input.value.trim()||wsLoading) return;
+  wsMsgs.push({role:'user',content:input.value.trim()});
+  input.value='';
+  renderWorkshop();
+  await doChatSend();
+}
+
+async function doChatSend(){
+  wsLoading=true; renderWorkshop();
+  try{
+    const sys=buildChatSystemPrompt();
+    const msgs=wsMsgs.map(m=>({role:m.role==='user'?'user':'assistant',content:m.content}));
+    const text=await callAPI(sys,msgs);
+    wsMsgs.push({role:'assistant',content:text});
+  }catch(e){
+    wsMsgs.push({role:'assistant',content:'❌ 错误: '+e.message});
+  }
+  wsLoading=false; renderWorkshop();
+}
+
 // ---- INIT ----
-renderWorksFilters(); renderWorksGrid(); renderBatch();
+renderWorksFilters(); renderWorksGrid(); renderBatch(); renderGenerator();
 </script>
 </body>
 </html>
