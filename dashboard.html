@@ -532,13 +532,24 @@ function renderGenerator(){
     <label><input type="checkbox" ${genOpts.benchmark?'checked':''} onchange="genOpts.benchmark=this.checked"> 📊 一键对标 <span style="font-size:10px;color:var(--text3)">(标注最像哪部作品)</span></label>
   </div>`;
 
-  // Generate button
+  // Generate button + Copy Prompt
   const canGen=genSel.length>=2 && key;
-  h+=`<div style="margin:14px 0;display:flex;align-items:center;gap:12px">
-    <button class="gen-btn" ${canGen?'onclick="doGenerate()"':'disabled'}>🎲 生成 3-5 个故事梗概</button>`;
-  if(!key) h+=`<span style="font-size:12px;color:var(--red)">← 请先设置API Key，然后运行 <code>python3 server.py</code></span>`;
+  const canPrompt=genSel.length>=2;
+  h+=`<div style="margin:14px 0;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <button class="gen-btn" ${canGen?'onclick="doGenerate()"':'disabled'}>🎲 生成 3-5 个故事梗概</button>
+    <button class="gen-btn" style="background:var(--card);color:var(--accent2);border-color:var(--accent2)" ${canPrompt?'onclick="showPrompt()"':'disabled'}>📋 复制Prompt</button>`;
+  if(!key && genSel.length>=2) h+=`<span style="font-size:12px;color:var(--gold)">← 无Key也可复制Prompt到其他模型</span>`;
   else if(genSel.length<2) h+=`<span style="font-size:12px;color:var(--text3)">← 至少选择2个标签</span>`;
   h+=`</div>`;
+
+  // Prompt display area (hidden by default)
+  h+=`<div id="gen-prompt-box" style="display:none;margin:12px 0">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+      <span style="font-size:13px;font-weight:700;color:var(--accent2)">📋 完整Prompt（可直接粘贴到任何模型）</span>
+      <button onclick="copyPromptText()" style="padding:4px 12px;border-radius:6px;border:1px solid var(--accent2);background:rgba(0,206,201,.12);color:var(--accent2);font-size:12px;cursor:pointer">📋 一键复制</button>
+    </div>
+    <textarea id="gen-prompt-text" readonly style="width:100%;height:400px;background:var(--bg);border:1px solid var(--border);color:var(--text2);padding:12px;border-radius:8px;font-size:12px;font-family:monospace;line-height:1.6;resize:vertical"></textarea>
+  </div>`;
 
   // Match info
   if(genSel.length>=2){
@@ -638,7 +649,28 @@ function formatMd(s){
     .replace(/❌/g,'<span style="color:var(--red)">❌</span>');
 }
 
-// 10k. Actions
+// 10k. Prompt display
+function showPrompt(){
+  if(genSel.length<2) return;
+  const matched=smartMatch();
+  const sys=buildGenSystemPrompt(matched);
+  const usr=buildGenUserPrompt();
+  const full=`=== SYSTEM PROMPT ===\n${sys}\n\n=== USER PROMPT ===\n${usr}`;
+  const box=document.getElementById('gen-prompt-box');
+  const ta=document.getElementById('gen-prompt-text');
+  if(box && ta){box.style.display='block';ta.value=full;ta.scrollTop=0;}
+}
+function copyPromptText(){
+  const ta=document.getElementById('gen-prompt-text');
+  if(!ta) return;
+  ta.select();
+  navigator.clipboard.writeText(ta.value).then(()=>{
+    const btn=ta.previousElementSibling?.querySelector?.('button')||ta.parentElement.querySelector('button');
+    if(btn){const old=btn.textContent;btn.textContent='✅ 已复制!';setTimeout(()=>btn.textContent=old,2000);}
+  }).catch(()=>document.execCommand('copy'));
+}
+
+// 10l. Actions
 async function doGenerate(){
   if(genLoading||genSel.length<2||!getApiKey()) return;
   genLoading=true; genResults=[]; renderGenerator();
