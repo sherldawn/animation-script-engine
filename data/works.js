@@ -733,11 +733,6 @@ const works = [
  highlights:"大卫·芬奇执导的爱死机一集。照片级CG达到无法区分真人的程度。「民主投票=道德测试」的叙事机制极其精巧。虽然太长无法压缩，但「用一个规则/机制驱动全部悬念」的手法可以学习。",
  links:[{text:"YouTube搜索",url:"https://www.youtube.com/results?search_query=love+death+robots+bad+travelling+david+fincher"}], keywords:"Bad Travelling Love Death Robots David Fincher crab"},
 
-{id:"pixar-partly-night", title:"Partly Cloudy 补充说明", creator:"补位", year:0, duration:"0",
- type:[], artStyle:[], technique:[], texture:[],
- source:"streaming", compress:"yes", dialogue:"none",
- plot:"占位不用", highlights:"占位不用",
- links:[], keywords:"placeholder"},
 
 {id:"apple-2019-holiday", title:"Apple 2019圣诞广告「The Surprise」", creator:"Apple", year:2019, duration:"~3min",
  type:["commercial","warm","human"], artStyle:["mixed"], technique:["liveActionAnim"], texture:["mixed"],
