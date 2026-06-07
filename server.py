@@ -39,7 +39,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         messages.extend(body.get('messages', []))
 
         payload = {
-            'model': body.get('model', 'anthropic/claude-sonnet-4-20250514'),
+            'model': body.get('model', 'anthropic/claude-opus-4'),
             'max_tokens': body.get('max_tokens', 4096),
             'messages': messages,
         }
@@ -59,7 +59,16 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             resp = urllib.request.urlopen(req, context=ssl.create_default_context(), timeout=120)
             return self._json(200, json.loads(resp.read()))
         except urllib.error.HTTPError as e:
-            return self._json(e.code, {'error': e.read().decode('utf-8', 'replace')})
+            err_body = e.read().decode('utf-8', 'replace')
+            # Try to parse JSON error for better messages
+            try:
+                err_json = json.loads(err_body)
+                err_msg = err_json.get('error', {})
+                if isinstance(err_msg, dict):
+                    err_msg = err_msg.get('message', '') or err_body
+                return self._json(e.code, {'error': f'OpenRouter {e.code}: {err_msg}'})
+            except Exception:
+                return self._json(e.code, {'error': f'OpenRouter {e.code}: {err_body}'})
         except Exception as e:
             return self._json(500, {'error': str(e)})
 
