@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 2min Animation Dashboard — Local Server
-Serves static files + proxies Claude API requests.
+Serves static files + proxies OpenRouter API requests.
 Usage: python3 server.py [port]
 """
 import http.server, json, urllib.request, urllib.error, ssl, sys
@@ -11,7 +11,7 @@ PORT = 8888
 class Handler(http.server.SimpleHTTPRequestHandler):
     def do_POST(self):
         if self.path in ('/api/generate', '/api/chat'):
-            self._proxy_claude()
+            self._proxy_openrouter()
         else:
             self.send_error(404)
 
@@ -22,7 +22,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.send_header('Access-Control-Allow-Headers', 'Content-Type')
         self.end_headers()
 
-    def _proxy_claude(self):
+    def _proxy_openrouter(self):
         try:
             body = json.loads(self.rfile.read(int(self.headers.get('Content-Length', 0))))
         except Exception:
@@ -32,21 +32,26 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         if not api_key:
             return self._json(400, {'error': 'Missing API key'})
 
-        payload = {
-            'model': body.get('model', 'claude-sonnet-4-20250514'),
-            'max_tokens': body.get('max_tokens', 4096),
-            'messages': body.get('messages', []),
-        }
+        # Build messages array — OpenRouter uses OpenAI-compatible format
+        messages = []
         if body.get('system'):
-            payload['system'] = body['system']
+            messages.append({'role': 'system', 'content': body['system']})
+        messages.extend(body.get('messages', []))
+
+        payload = {
+            'model': body.get('model', 'anthropic/claude-sonnet-4-20250514'),
+            'max_tokens': body.get('max_tokens', 4096),
+            'messages': messages,
+        }
 
         req = urllib.request.Request(
-            'https://api.anthropic.com/v1/messages',
+            'https://openrouter.ai/api/v1/chat/completions',
             data=json.dumps(payload).encode('utf-8'),
             headers={
                 'Content-Type': 'application/json',
-                'x-api-key': api_key,
-                'anthropic-version': '2023-06-01',
+                'Authorization': f'Bearer {api_key}',
+                'HTTP-Referer': 'http://localhost:8888',
+                'X-Title': '2min Animation Dashboard',
             },
             method='POST'
         )

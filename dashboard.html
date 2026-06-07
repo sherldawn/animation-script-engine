@@ -309,6 +309,8 @@ let wsLoading=false;
 // 10b. Persistence
 function getApiKey(){return localStorage.getItem('dash_apiKey')||''}
 function setApiKey(k){localStorage.setItem('dash_apiKey',k)}
+function getModel(){return localStorage.getItem('dash_model')||'anthropic/claude-sonnet-4-20250514'}
+function setModel(m){localStorage.setItem('dash_model',m)}
 
 // 10c. Label helpers
 function genTagLabel(cat,val){
@@ -420,15 +422,15 @@ function buildChatSystemPrompt(){
   return s;
 }
 
-// 10g. API calls
+// 10g. API calls (OpenRouter — OpenAI-compatible format)
 async function callAPI(system,messages){
   const key=getApiKey();
-  if(!key) throw new Error('请先设置API Key');
+  if(!key) throw new Error('请先设置OpenRouter API Key');
   try{
     const resp=await fetch('/api/generate',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({apiKey:key, system, messages, max_tokens:4096})
+      body:JSON.stringify({apiKey:key, system, messages, model:getModel(), max_tokens:4096})
     });
     if(!resp.ok){
       const err=await resp.json().catch(()=>({error:`HTTP ${resp.status}`}));
@@ -436,7 +438,8 @@ async function callAPI(system,messages){
       throw new Error(msg);
     }
     const data=await resp.json();
-    return data.content?.[0]?.text||'';
+    // OpenRouter returns OpenAI-compatible: choices[0].message.content
+    return data.choices?.[0]?.message?.content || '';
   }catch(e){
     if(e.message==='Failed to fetch'||e.message.includes('NetworkError'))
       throw new Error('无法连接服务器。请确保已运行: python3 server.py');
@@ -478,12 +481,22 @@ function renderGenerator(){
   const key=getApiKey();
   let h='';
 
-  // API Key
+  // API Key + Model selector (OpenRouter)
   h+=`<div class="gen-api">
-    <span style="font-size:12px;font-weight:700;color:var(--accent2)">🔑 Claude API Key</span>
-    <input type="password" id="gen-api-input" value="${key}" placeholder="sk-ant-api03-...">
+    <span style="font-size:12px;font-weight:700;color:var(--accent2)">🔑 OpenRouter API Key</span>
+    <input type="password" id="gen-api-input" value="${key}" placeholder="sk-or-v1-...">
     <button onclick="setApiKey(document.getElementById('gen-api-input').value);renderGenerator()">保存</button>
     <span class="status" style="color:${key?'var(--green)':'var(--text3)'}">${key?'✅ 已保存':'未设置'}</span>
+    <span style="font-size:11px;color:var(--text3);margin-left:8px">模型:</span>
+    <select id="gen-model-sel" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:4px 8px;border-radius:6px;font-size:12px" onchange="setModel(this.value)">
+      <option value="anthropic/claude-sonnet-4-20250514" ${getModel()==='anthropic/claude-sonnet-4-20250514'?'selected':''}>Claude Sonnet 4</option>
+      <option value="anthropic/claude-3.5-sonnet" ${getModel()==='anthropic/claude-3.5-sonnet'?'selected':''}>Claude 3.5 Sonnet</option>
+      <option value="openai/gpt-4o" ${getModel()==='openai/gpt-4o'?'selected':''}>GPT-4o</option>
+      <option value="openai/gpt-4o-mini" ${getModel()==='openai/gpt-4o-mini'?'selected':''}>GPT-4o Mini</option>
+      <option value="google/gemini-2.5-flash-preview" ${getModel()==='google/gemini-2.5-flash-preview'?'selected':''}>Gemini 2.5 Flash</option>
+      <option value="deepseek/deepseek-chat" ${getModel()==='deepseek/deepseek-chat'?'selected':''}>DeepSeek V3</option>
+    </select>
+    <a href="https://openrouter.ai/keys" target="_blank" style="font-size:11px;margin-left:4px">获取Key ↗</a>
   </div>`;
 
   // Tag categories
