@@ -17,6 +17,7 @@ const tagRegistry = {
       nostalgia:  {label:"📼 怀旧", color:"#fd79a8"},
       ai:         {label:"🤖 AI新锐", color:"#00cec9"},
       chinese:    {label:"🇨🇳 中国文化", color:"#d63031"},
+      japanese:   {label:"🇯🇵 日本美学", color:"#fd79a8"},
       game:       {label:"🎮 游戏IP/风格", color:"#a29bfe"},
       music:      {label:"🎵 音乐驱动", color:"#e84393"},
       commercial: {label:"📺 商业/宣传", color:"#00b894"},
@@ -48,7 +49,9 @@ const tagRegistry = {
       woodcut:    {label:"🪵 木刻版画", color:"#e17055"},
       geometric:  {label:"🔷 几何极简", color:"#0984e3"},
       atomPunk:   {label:"☢️ 原子朋克", color:"#fdcb6e"},
-      flash:      {label:"⚡ Flash风格", color:"#e84393"}
+      flash:      {label:"⚡ Flash风格", color:"#e84393"},
+      inkwash:    {label:"🎋 水墨", color:"#636e72"},
+      ukiyoe:     {label:"🌊 浮世绘风", color:"#0984e3"}
     }
   },
   technique: {
@@ -65,7 +68,8 @@ const tagRegistry = {
       motionGraphics: {label:"📊 动态图形", color:"#74b9ff"},
       mixed:          {label:"🔀 混合技法", color:"#636e72"},
       liveActionAnim: {label:"🎭 真人+动画", color:"#b2bec3"},
-      photoManip:     {label:"📸 照片拼接", color:"#e17055"}
+      photoManip:     {label:"📸 照片拼接", color:"#e17055"},
+      gameEngine:     {label:"🕹️ 游戏引擎", color:"#a29bfe"}
     }
   },
   texture: {
