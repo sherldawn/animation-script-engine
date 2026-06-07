@@ -11,6 +11,7 @@
   --accent: #6c5ce7; --accent2: #00cec9; --accent3: #fd79a8;
   --text: #dfe6e9; --text2: #b2bec3; --text3: #636e72;
   --border: #2d3436; --tag-bg: #2d3436;
+  --creative-accent: #fdcb6e; --creative-bg: rgba(253,203,110,.08);
 }
 body { font-family: -apple-system, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
 a { color: var(--accent2); text-decoration: none; }
@@ -115,10 +116,68 @@ nav button:hover, nav button.active { background: var(--accent); color: #fff; bo
 .table-wrap td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text2); }
 .table-wrap tr:hover td { background: var(--card-hover); }
 
+/* ============ CREATIVE WORKSHOP ============ */
+.creative-filters { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+.creative-filter-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border); background: var(--card); color: var(--text2); cursor: pointer; font-size: 13px; transition: .2s; }
+.creative-filter-btn:hover { border-color: var(--creative-accent); color: var(--creative-accent); }
+.creative-filter-btn.active { background: var(--creative-accent); color: #2d3436; border-color: var(--creative-accent); }
+
+.creative-card { background: var(--card); border-radius: 16px; padding: 0; border: 1px solid var(--border); margin-bottom: 24px; overflow: hidden; transition: .2s; }
+.creative-card:hover { border-color: var(--creative-accent); }
+.creative-card-header { padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+.creative-card-header:hover { background: var(--card-hover); }
+.creative-card-title { font-size: 18px; font-weight: 700; }
+.creative-card-title .num { color: var(--creative-accent); margin-right: 8px; }
+
+.creative-status { font-size: 12px; padding: 4px 12px; border-radius: 20px; white-space: nowrap; }
+.status-draft { background: rgba(178,190,195,.2); color: var(--text2); }
+.status-discussion { background: rgba(253,203,110,.2); color: var(--creative-accent); border: 1px solid rgba(253,203,110,.3); }
+.status-final { background: rgba(0,184,148,.2); color: #00b894; border: 1px solid rgba(0,184,148,.3); }
+.status-rejected { background: rgba(214,48,49,.2); color: #d63031; border: 1px solid rgba(214,48,49,.3); }
+
+.creative-card-body { display: none; padding: 0 24px 24px; }
+.creative-card-body.open { display: block; }
+
+.creative-phase { margin-bottom: 20px; }
+.creative-phase-title { font-size: 14px; font-weight: 700; color: var(--creative-accent); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.creative-phase-title:hover { color: #fff; }
+.creative-phase-title .arrow { transition: .2s; display: inline-block; font-size: 12px; }
+.creative-phase-title .arrow.open { transform: rotate(90deg); }
+.creative-phase-content { display: none; padding: 12px 16px; background: var(--bg); border-radius: 8px; font-size: 13px; color: var(--text2); line-height: 1.7; }
+.creative-phase-content.open { display: block; }
+.creative-phase-content p { margin-bottom: 8px; }
+.creative-phase-content strong { color: var(--text); }
+.creative-phase-content .version-tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 10px; margin-right: 6px; }
+.version-v1 { background: rgba(214,48,49,.2); color: #d63031; }
+.version-v2 { background: rgba(253,203,110,.2); color: var(--creative-accent); }
+.version-v3 { background: rgba(0,184,148,.2); color: #00b894; }
+
+.creative-checklist { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; margin-top: 8px; }
+.creative-checklist-item { font-size: 13px; padding: 4px 0; }
+.creative-checklist-item.pass { color: #00b894; }
+.creative-checklist-item.fail { color: #d63031; }
+.creative-checklist-item.warn { color: var(--creative-accent); }
+
+.storyboard { margin-top: 12px; }
+.storyboard-shot { background: var(--card); border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; border-left: 3px solid var(--accent2); }
+.storyboard-shot .shot-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+.storyboard-shot .shot-num { font-weight: 700; color: var(--accent2); font-size: 13px; }
+.storyboard-shot .shot-time { font-size: 11px; color: var(--text3); }
+.storyboard-shot .shot-difficulty { font-size: 11px; }
+.storyboard-shot .shot-desc { font-size: 13px; color: var(--text2); }
+
+.creative-summary-box { background: linear-gradient(135deg, rgba(253,203,110,.1), rgba(0,184,148,.1)); border: 1px solid var(--creative-accent); border-radius: 12px; padding: 20px; margin-top: 16px; }
+.creative-summary-box h4 { color: var(--creative-accent); margin-bottom: 8px; font-size: 15px; }
+
+.evolution-flow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 12px 0; }
+.evolution-step { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 8px 14px; font-size: 12px; color: var(--text2); }
+.evolution-arrow { color: var(--creative-accent); font-size: 16px; }
+
 @media (max-width: 768px) {
   .cards { grid-template-columns: 1fr; }
   .rules-grid { grid-template-columns: 1fr; }
   .checklist { columns: 1; }
+  .creative-checklist { grid-template-columns: 1fr; }
   nav { padding: 8px 12px; }
 }
 </style>
@@ -133,6 +192,7 @@ nav button:hover, nav button.active { background: var(--accent); color: #fff; bo
   <button onclick="showSection('directions')" id="nav-directions">创作方向</button>
   <button onclick="showSection('formula')" id="nav-formula">创作公式</button>
   <button onclick="showSection('comparison')" id="nav-comparison">对比表</button>
+  <button onclick="showSection('creative')" id="nav-creative" style="background:rgba(253,203,110,.15);color:var(--creative-accent);border-color:rgba(253,203,110,.3)">🎨 创意工坊</button>
 </nav>
 
 <!-- ============ WORKS SECTION ============ -->
@@ -182,7 +242,7 @@ nav button:hover, nav button.active { background: var(--accent); color: #fff; bo
 <!-- ============ RULES SECTION ============ -->
 <div class="section hidden" id="sec-rules">
   <h1 class="section-title">📐 规律总结</h1>
-  <p class="section-sub">从60+部作品中提炼的10条核心创作规律</p>
+  <p class="section-sub">从60+部作品中提炼的11条核心创作规律</p>
   <div class="rules-grid">
     <div class="rule-card">
       <h3>规律1：一个概念</h3>
@@ -277,6 +337,21 @@ nav button:hover, nav button.active { background: var(--accent); color: #fff; bo
       <tr><td>系列化</td><td>YouTube+TikTok</td></tr>
       </table>
     </div>
+    <div class="rule-card" style="border-color:var(--creative-accent)">
+      <h3 style="color:var(--creative-accent)">规律11：AIGC约束 = 创意约束 🆕</h3>
+      <p style="margin-bottom:8px"><strong>先问"AI能拍什么"，再设计故事。</strong></p>
+      <table><tr><th>AI能力</th><th>表现</th></tr>
+      <tr><td>✅ 单角色静态/慢动作</td><td>很好</td></tr>
+      <tr><td>✅ 表情特写/反应镜头</td><td>很好</td></tr>
+      <tr><td>✅ 环境/氛围渲染</td><td>极好</td></tr>
+      <tr><td>✅ 风格切换/转场</td><td>极好（AI强项）</td></tr>
+      <tr><td>⚠️ 2角色简单互动</td><td>还行</td></tr>
+      <tr><td>❌ 多角色复杂肢体接触</td><td>很差</td></tr>
+      <tr><td>❌ 快速动作编排</td><td>很差</td></tr>
+      <tr><td>❌ 精确物理交互</td><td>很差</td></tr>
+      </table>
+      <p style="margin-top:8px;color:var(--creative-accent)">→ 用AI的强项（特写、氛围、风格切换）替代弱项（复杂动作）</p>
+    </div>
   </div>
 </div>
 
@@ -297,21 +372,23 @@ nav button:hover, nav button.active { background: var(--accent); color: #fff; bo
 
 <!-- ============ FORMULA SECTION ============ -->
 <div class="section hidden" id="sec-formula">
-  <h1 class="section-title">🧪 创作公式 V1.5</h1>
-  <p class="section-sub">综合60+部作品提炼的创作公式和检查清单</p>
-  <div class="formula-box">
-    <h3>V1.5 公式</h3>
-    <code>2分钟以下北美向动画 = 
+  <h1 class="section-title">🧪 创作公式 V2.0</h1>
+  <p class="section-sub">综合60+部作品 + 创意实践提炼的创作公式和检查清单</p>
+  <div class="formula-box" style="border-color: var(--creative-accent);">
+    <h3 style="color: var(--creative-accent);">V2.0 公式（含AIGC约束）🆕</h3>
+    <code>2分钟以下北美向AI动画 = 
   一句话概念 
   + 非人类主角（动物 > 机器人 > 物品）
   + 7种结构中选1种
   + 零对白或极少对白  
   + 风格化视觉（辨识度 > 精度）
   + 1个视觉记忆点（可截图/meme化）
-  + 强结尾（笑/泪/震/思 任选一种）</code>
+  + 强结尾（笑/泪/震/思 任选一种）
+  + AIGC友好设计（特写 > 动作，风格切换 > 物理交互）
+  + ≤2个主角，≤10个镜头</code>
   </div>
   <div class="formula-box" style="border-color: var(--accent2);">
-    <h3>✅ 创作检查清单（每个剧本必须通过）</h3>
+    <h3>✅ 创作检查清单 V2.0（每个剧本必须通过）</h3>
     <div class="checklist" style="margin-top:12px;">
       <label><input type="checkbox"> 能用一句话说清概念？</label>
       <label><input type="checkbox"> 主角是非人类？</label>
@@ -319,9 +396,17 @@ nav button:hover, nav button.active { background: var(--accent); color: #fff; bo
       <label><input type="checkbox"> 有"停下滑动"的画面？</label>
       <label><input type="checkbox"> 结尾有明确情感交付？</label>
       <label><input type="checkbox"> 视觉风格有辨识度？</label>
-      <label><input type="checkbox"> AI工具能实现？</label>
+      <label><input type="checkbox"> AI工具能实现？（无复杂多角色动作）</label>
       <label><input type="checkbox"> 看完想分享？</label>
+      <label><input type="checkbox"> 主角≤2个？</label>
+      <label><input type="checkbox"> 总镜头≤10个？</label>
     </div>
+  </div>
+  <div class="formula-box">
+    <h3>V1.5 公式（参考）</h3>
+    <code>2分钟以下北美向动画 = 
+  一句话概念 + 非人类主角 + 7种结构中选1种
+  + 零对白 + 风格化视觉 + 1个视觉记忆点 + 强结尾</code>
   </div>
   <div class="formula-box" style="border-color: var(--accent3);">
     <h3>V1.0 原版公式（参考）</h3>
@@ -334,6 +419,22 @@ nav button:hover, nav button.active { background: var(--accent); color: #fff; bo
   <h1 class="section-title">📊 对比表</h1>
   <p class="section-sub">所有作品关键维度速查</p>
   <div class="table-wrap" id="comparison-table"></div>
+</div>
+
+<!-- ============ CREATIVE WORKSHOP SECTION ============ -->
+<div class="section hidden" id="sec-creative">
+  <h1 class="section-title">🎨 创意工坊</h1>
+  <p class="section-sub">从原始想法到可执行剧本的完整讨论与迭代记录</p>
+
+  <div class="creative-filters" id="creative-filters">
+    <button class="creative-filter-btn active" data-status="all">全部</button>
+    <button class="creative-filter-btn" data-status="draft">💡 草稿</button>
+    <button class="creative-filter-btn" data-status="discussion">🔄 讨论中</button>
+    <button class="creative-filter-btn" data-status="final">✅ 定稿</button>
+    <button class="creative-filter-btn" data-status="rejected">❌ 已否决</button>
+  </div>
+
+  <div id="creative-container"></div>
 </div>
 
 <script>
@@ -480,16 +581,16 @@ const works = [
    highlights:"奥斯卡获奖。非人类视角教科书。食物蒙太奇。可压缩至2min。",
    fullHighlights:"奥斯卡获奖。「非人类视角讲人类故事」教科书。用食物做叙事标记——每种食物=一个人生阶段。6分钟内蒙太奇压缩数年。低视角（狗的视角）迫使观众换位。可压缩至2min——食物蒙太奇结构60-90秒可完成完整弧线。",
    links:[{text:"YouTube搜索",url:"https://www.youtube.com/results?search_query=disney+feast+short+film+full"}],keywords:"Disney Feast dog food short"},
-  {id:25,title:"Alike",creator:"Daniel Martínez Lara",year:2015,duration:"7:47",type:"warm",source:"streaming",compress:"yes",dialogue:"none",
+  {id:25,title:"Alike",creator:"Daniel Mart\u00ednez Lara",year:2015,duration:"7:47",type:"warm",source:"streaming",compress:"yes",dialogue:"none",
    plot:"蓝色父亲+橙色儿子。学校/公司消磨颜色(=创造力)。父亲带儿子看街头音乐家，两人找回颜色。",
    fullStory:"蓝色父亲和橙色儿子。每天父亲带儿子上学再去公司。儿子天真爱画画跳舞，但学校要求坐端正写字服从。父亲在灰色公司做灰色文书，身上蓝色渐渐消失变灰。儿子橙色也在学校中消磨。最终父亲看到完全失色的儿子，带他去看街头音乐家——两人重新找回颜色。",
    highlights:"颜色=情感隐喻。零对白。YouTube 2亿+播放。教育批判在北美极共鸣。",
    fullHighlights:"「颜色=情感」视觉隐喻——全片核心设计，不需任何解释。零对白。亲子+社会批判（教育压制创造力）在北美极度共鸣。YouTube 2亿+播放——独立短片传播奇迹。启示：用颜色/形状变化表达情感，比对白高效100倍。",
    links:[{text:"YouTube搜索",url:"https://www.youtube.com/results?search_query=alike+animated+short+film+full"}],keywords:"Alike animated short film"},
   // -- LONELY --
-  {id:26,title:"WALL·E 前8分钟",creator:"Pixar / Andrew Stanton",year:2008,duration:"~8min",type:"lonely",source:"streaming",compress:"yes",dialogue:"none",
-   plot:"垃圾地球上WALL·E独自工作700年。下班后看老电影、收集物品、给蟑螂喂食。在夕阳中握自己的手。",
-   fullStory:"垃圾覆盖的地球，人类全部撤离。WALL·E独自工作了700年——压垃圾、堆叠成塔。下班后回到废弃卡车「家」、看老电影（Hello, Dolly!）、收集人类物品（灯泡/魔方/运动鞋）、给蟑螂宠物喂食。用iPod播最爱的歌，在夕阳中握着自己的手——因为电影里人类牵手，它没人可牵。",
+  {id:26,title:"WALL\u00b7E 前8分钟",creator:"Pixar / Andrew Stanton",year:2008,duration:"~8min",type:"lonely",source:"streaming",compress:"yes",dialogue:"none",
+   plot:"垃圾地球上WALL\u00b7E独自工作700年。下班后看老电影、收集物品、给蟑螂喂食。在夕阳中握自己的手。",
+   fullStory:"垃圾覆盖的地球，人类全部撤离。WALL\u00b7E独自工作了700年——压垃圾、堆叠成塔。下班后回到废弃卡车「家」、看老电影（Hello, Dolly!）、收集人类物品（灯泡/魔方/运动鞋）、给蟑螂宠物喂食。用iPod播最爱的歌，在夕阳中握着自己的手——因为电影里人类牵手，它没人可牵。",
    highlights:"与丧尸清道夫同一内核。无对白情感巅峰。所有'孤独机器人'故事原型。",
    fullHighlights:"与丧尸清道夫几乎同一故事内核。无对白的情感巅峰。通过收集物品、看电影等小动作建立完整「人格」。广阔废土+渺小机器人＝最直观孤独表达。所有「孤独机器人」故事的原型(archetype)。",
    links:[{text:"YouTube搜索",url:"https://www.youtube.com/results?search_query=wall+e+opening+scene+no+dialogue"}],keywords:"WALL-E opening scene"},
@@ -500,11 +601,11 @@ const works = [
    fullHighlights:"奥斯卡提名。定格动画极致美感。「一个日常动作承载一生情感」——打包=父爱。结尾一句话击碎观众：「All that wasted space.」男性情感/父子关系在北美是「被压抑但渴望表达」的主题。可压缩至90秒——核心意象「行李箱→棺材」用蒙太奇可快速完成。",
    links:[{text:"YouTube搜索",url:"https://www.youtube.com/results?search_query=negative+space+animated+short+film"}],keywords:"Negative Space animated short"},
   {id:28,title:"Float",creator:"Pixar SparkShorts / Bobby Rubio",year:2019,duration:"7:00",type:"lonely",source:"streaming",compress:"yes",dialogue:"few",
-   plot:"亚裔父亲发现儿子会飘起来(='不同')。焦虑隐藏→男孩退缩→最终父亲选择放手接受。",
+   plot:"亚裔父亲发现儿子会飘起来(='不同')。焦虑隐藏\u2192男孩退缩\u2192最终父亲选择放手接受。",
    highlights:"漂浮=自闭症/ADHD隐喻。亚裔主角。从'隐藏不同'到'接受不同'。",
    links:[{text:"YouTube搜索",url:"https://www.youtube.com/results?search_query=pixar+float+short+film+sparksshorts"}],keywords:"Pixar Float SparkShorts"},
   {id:29,title:"Afternoon Class",creator:"Seoro Oh",year:2015,duration:"5:48",type:"lonely",source:"streaming",compress:"yes",dialogue:"none",
-   plot:"学生下午犯困。灵魂离体飞入梦境(云端/铅笔飞行/踏浪)→身体前倾→砰砸桌。循环。",
+   plot:"学生下午犯困。灵魂离体飞入梦境(云端/铅笔飞行/踏浪)\u2192身体前倾\u2192砰砸桌。循环。",
    highlights:"全球共鸣。循环结构。60秒可完成。数千万播放。",
    links:[{text:"YouTube搜索",url:"https://www.youtube.com/results?search_query=afternoon+class+animated+short+film"}],keywords:"Afternoon Class animated short"},
   {id:30,title:"La Luna",creator:"Pixar / Enrico Casarosa",year:2011,duration:"6:57",type:"lonely",source:"streaming",compress:"yes",dialogue:"few",
@@ -513,15 +614,15 @@ const works = [
    links:[{text:"YouTube搜索",url:"https://www.youtube.com/results?search_query=pixar+la+luna+short+film"}],keywords:"Pixar La Luna short film"},
   // -- NOSTALGIA --
   {id:31,title:"Mr. Morris Lessmore",creator:"Moonbot Studios",year:2011,duration:"15:00",type:"nostalgia",source:"festival",compress:"maybe",dialogue:"few",
-   plot:"飓风毁世界→变黑白→会飞的书带他到图书馆→守护书一生→自己变成书飞走。",
-   highlights:"奥斯卡获奖。对纸质书的怀旧。黑白→彩色。iPad App获Apple设计奖。",
+   plot:"飓风毁世界\u2192变黑白\u2192会飞的书带他到图书馆\u2192守护书一生\u2192自己变成书飞走。",
+   highlights:"奥斯卡获奖。对纸质书的怀旧。黑白\u2192彩色。iPad App获Apple设计奖。",
    links:[{text:"YouTube搜索",url:"https://www.youtube.com/results?search_query=mr+morris+lessmore+animated+short+full"}],keywords:"Mr Morris Lessmore flying books"},
   {id:32,title:"Lava",creator:"Pixar",year:2014,duration:"7:00",type:"nostalgia",source:"streaming",compress:"maybe",dialogue:"few",
    plot:"孤独火山百万年唱'I Lava You'等伴侣。快沉底时海底新火山升起。",
-   highlights:"Lava/Love谐音梗。尤克里里+夏威夷怀旧。⚠️部分评论嫌太甜。",
+   highlights:"Lava/Love谐音梗。尤克里里+夏威夷怀旧。\u26a0\ufe0f部分评论嫌太甜。",
    links:[{text:"YouTube搜索",url:"https://www.youtube.com/results?search_query=pixar+lava+short+film"}],keywords:"Pixar Lava I lava you"},
   {id:33,title:"Get A Horse!",creator:"Disney",year:2013,duration:"6:00",type:"nostalgia",source:"streaming",compress:"yes",dialogue:"few",
-   plot:"1928年黑白米老鼠→角色冲出2D银幕→进入3D彩色世界→在两个空间战斗。",
+   plot:"1928年黑白米老鼠\u2192角色冲出2D银幕\u2192进入3D彩色世界\u2192在两个空间战斗。",
    highlights:"怀旧+创新(1928+2013)。Meta叙事。Walt Disney原始录音配音。",
    links:[{text:"YouTube搜索",url:"https://www.youtube.com/results?search_query=disney+get+a+horse+short+film"}],keywords:"Disney Get A Horse Mickey Mouse"},
   {id:34,title:"If Anything Happens I Love You",creator:"Netflix",year:2020,duration:"12:00",type:"nostalgia",source:"festival",compress:"maybe",dialogue:"few",
@@ -534,16 +635,16 @@ const works = [
    links:[{text:"YouTube搜索",url:"https://www.youtube.com/results?search_query=pixar+day+and+night+short+film"}],keywords:"Pixar Day and Night short film"},
   // -- AI --
   {id:36,title:"鸽子时光机 Pigeon Time Travelers",creator:"Marko Slavnic / Runway",year:2025,duration:"0:46",type:"ai",source:"streaming",compress:"yes",dialogue:"few",
-   plot:"3只鸽子争论遥控器是什么。第三只按下按钮消失→穿草裙回来。'下一个轮到我!'",
+   plot:"3只鸽子争论遥控器是什么。第三只按下按钮消失\u2192穿草裙回来。'下一个轮到我!'",
    fullStory:"城市街头，三只鸽子歪着脑袋围在一个东西旁边——一个黑色的、带按钮的遥控器状物体。第一只鸽子笃定地宣布：「这是手机。」第二只鸽子立刻反驳。两只鸽子越吵越凶，扑腾着翅膀互相啄。就在它们打成一团的时候，第三只鸽子悄悄走近。镜头切到遥控器的特写——观众清清楚楚看到上面写着「TIME MACHINE」两个大字。这是经典的「戏剧性反讽」时刻。第三只鸽子毫不犹豫地按下了按钮。嗖——消失了。片刻之后一道闪光，第三只鸽子回来了——穿着类似原始部落的草裙，头上插着羽毛装饰。沉默了一秒。另一只鸽子两眼放光：「下一个轮到我了！」全片结束。",
    highlights:"46秒完美三拍结构。皮克斯级渲染。几小时+Runway完成。14.9K赞。",
-   fullHighlights:"46秒完美三拍结构（Setup→Irony→Punchline→Button）。皮克斯级3D渲染感。几小时+Runway完成。14.9K赞、8.8K收藏、1.2K转发。引发「AI动画是否算动画」的全网争论。被Google DeepMind工程师评为「看起来像大型工作室制作」。",
+   fullHighlights:"46秒完美三拍结构（Setup\u2192Irony\u2192Punchline\u2192Button）。皮克斯级3D渲染感。几小时+Runway完成。14.9K赞、8.8K收藏、1.2K转发。引发「AI动画是否算动画」的全网争论。被Google DeepMind工程师评为「看起来像大型工作室制作」。",
    links:[{text:"X原帖",url:"https://x.com/Markoslavnic/status/2052797538885902418"}],keywords:"Pigeon Time Travelers Marko Slavnic"},
   {id:37,title:"丧尸清道夫 Zombie Scavenger",creator:"刘子钰 MX-Shell / Seedance",year:2025,duration:"3:34",type:"ai",source:"streaming",compress:"yes",dialogue:"none",
    plot:"原子朋克废土中机器人清洁工骑机械鸵鸟清理丧尸。最终凝望橱窗人体模型。",
    fullStory:"在一片被核辐射和时间共同侵蚀的废土上，主角是一个机器人清洁工。在人类灭亡之后，它依然在执行着自己的「工作」——只不过现在需要清扫的是成群结队的丧尸。机器人骑着一只机械鸵鸟穿行在死寂的城镇中。经过废弃的加油站，几只丧尸摇晃着走出来。机器人没有恐惧——它抬手开枪，就像清洁工拿起扫帚一样自然。丧尸在嘶吼扑咬，机器人在扫描、拖着清洁推车、放置警示锥筒。然而转折发生在最后。机器人路过一家废弃商店，橱窗里站着一个人体模型。机器人停下了。它第一次没有继续「工作」——在废墟的世界里，突然看到了某种它本不应该理解的东西：美、思念、或者仅仅是「陪伴」的概念。",
-   highlights:"$440+10天=6000万+播放。已签约长片。WALL·E精神续作。",
-   fullHighlights:"$440+10天=6000万+播放。已签约开发长片+Yoroll互动游戏。WALL·E的精神续作。黑色幽默→深沉孤独的情感反转。被称为「中国版爱死机」。在3分34秒内完成了世界观构建、角色塑造、情感递进和主题升华——没有一秒是浪费的。",
+   highlights:"$440+10天=6000万+播放。已签约长片。WALL\u00b7E精神续作。",
+   fullHighlights:"$440+10天=6000万+播放。已签约开发长片+Yoroll互动游戏。WALL\u00b7E的精神续作。黑色幽默\u2192深沉孤独的情感反转。被称为「中国版爱死机」。在3分34秒内完成了世界观构建、角色塑造、情感递进和主题升华——没有一秒是浪费的。",
    links:[{text:"PJ Ace转发",url:"https://x.com/PJaccetturo/status/2053475534965965067"},{text:"官网",url:"https://zombiescavenger.com/"}],keywords:"Zombie Scavenger MX-Shell"},
   {id:38,title:"The Frost (Sora)",creator:"Waymark / OpenAI",year:2024,duration:"~1:00",type:"ai",source:"streaming",compress:"yes",dialogue:"none",
    plot:"孤独探险者在冰雪荒原行走。纯氛围无叙事。人与冰雪融为一体。",
@@ -551,7 +652,7 @@ const works = [
    links:[{text:"YouTube搜索",url:"https://www.youtube.com/results?search_query=the+frost+sora+short+film+waymark"}],keywords:"The Frost Sora short film"},
   // -- FESTIVAL --
   {id:39,title:"For the Birds",creator:"Pixar / Ralph Eggleston",year:2000,duration:"3:25",type:"slapstick",source:"festival",compress:"yes",dialogue:"none",
-   plot:"小鸟们嘲笑大鸟→大鸟掉下→电线反弹→小鸟被弹飞裸体。",
+   plot:"小鸟们嘲笑大鸟\u2192大鸟掉下\u2192电线反弹\u2192小鸟被弹飞裸体。",
    fullStory:"一群小鸟站在电线上，嘲笑一只外形奇怪的大鸟。大鸟想加入，小鸟们往中间挤，电线越拉越低。最后大鸟掉下去时电线反弹——小鸟们全被弹飞到天上，羽毛落光。大鸟笑到最后。",
    highlights:"奥斯卡获奖。3:25最接近目标时长。物理反转punchline。",
    fullHighlights:"奥斯卡获奖。3分25秒——最接近目标时长的奥斯卡获奖作品。Setup只需10秒。物理反转punchline完美。「欺负者被反转」=永恒的爽感。",
@@ -559,23 +660,23 @@ const works = [
   {id:40,title:"Hair Love",creator:"Matthew A. Cherry",year:2019,duration:"7:00",type:"warm",source:"festival",compress:"yes",dialogue:"few",
    plot:"非裔父亲笨拙帮女儿弄头发。最后去医院看化疗中的妈妈。",
    fullStory:"一个非裔美国父亲第一次尝试帮女儿弄头发——女儿想要跟YouTube教程一样的精致发型去见某个人。父亲笨拙地与女儿蓬松的卷发搏斗，试了各种工具都失败。最后父女合作成功。他们出门，来到一间医院病房——原来妈妈正在接受化疗（因此父亲不得不学梳头）。女儿漂亮的发型让妈妈流下了幸福的泪。",
-   highlights:"奥斯卡获奖。非裔头发文化。众筹→奥斯卡→系列化。",
-   fullHighlights:"奥斯卡获奖。非裔美国人的头发文化——在北美是非常重要的文化身份议题。众筹起步→奥斯卡获奖→被改编为动画系列和图书。结尾的医院反转——一下把「搞笑」变成「心碎+温暖」。证明了多元文化叙事在奥斯卡的分量。",
+   highlights:"奥斯卡获奖。非裔头发文化。众筹\u2192奥斯卡\u2192系列化。",
+   fullHighlights:"奥斯卡获奖。非裔美国人的头发文化——在北美是非常重要的文化身份议题。众筹起步\u2192奥斯卡获奖\u2192被改编为动画系列和图书。结尾的医院反转——一下把「搞笑」变成「心碎+温暖」。证明了多元文化叙事在奥斯卡的分量。",
    links:[{text:"YouTube完整版",url:"https://www.youtube.com/watch?v=kNw8V_Fkw28"}],keywords:"Hair Love Oscar animated short"},
   {id:41,title:"Windshield Wiper",creator:"Alberto Mielgo",year:2021,duration:"15:00",type:"dark",source:"festival",compress:"maybe",dialogue:"few",
-   plot:"男人问'What is love?'→一系列关于爱的视觉碎片。无线性叙事。",
+   plot:"男人问'What is love?'\u2192一系列关于爱的视觉碎片。无线性叙事。",
    highlights:"奥斯卡获奖。油画级视觉。问题驱动而非叙事驱动。",
    links:[{text:"YouTube搜索",url:"https://www.youtube.com/results?search_query=windshield+wiper+oscar+animated+short"}],keywords:"Windshield Wiper Alberto Mielgo Oscar"},
   {id:42,title:"Kitbull",creator:"Pixar SparkShorts",year:2019,duration:"8:55",type:"warm",source:"festival",compress:"yes",dialogue:"none",
    plot:"流浪猫和被虐斗牛犬建立友谊。两个被抛弃的动物互相拯救。",
    highlights:"YouTube 1亿+播放。2D手绘风。反动物虐待。",
    links:[{text:"YouTube完整版",url:"https://www.youtube.com/watch?v=AZS5cgybKcI"}],keywords:"Pixar Kitbull short film"},
-  {id:43,title:"Mémorable",creator:"Bruno Collet",year:2019,duration:"12:00",type:"nostalgia",source:"festival",compress:"maybe",dialogue:"few",
+  {id:43,title:"M\u00e9morable",creator:"Bruno Collet",year:2019,duration:"12:00",type:"nostalgia",source:"festival",compress:"maybe",dialogue:"few",
    plot:"画家患阿尔茨海默。现实变形：家具融化成油画，妻子脸变毕加索，房间变达利。",
    highlights:"昂西+奥斯卡提名。阿尔茨海默=走进名画。AI风格融合天然适合。",
-   links:[{text:"YouTube搜索",url:"https://www.youtube.com/results?search_query=memorable+animated+short+bruno+collet"}],keywords:"Mémorable Bruno Collet Alzheimer"},
-  {id:44,title:"Ice Merchants",creator:"João Gonzalez",year:2022,duration:"14:00",type:"lonely",source:"festival",compress:"yes",dialogue:"none",
-   plot:"父子住悬崖边。每天生产冰块→跳崖→降落伞→卖冰。危险的日常。",
+   links:[{text:"YouTube搜索",url:"https://www.youtube.com/results?search_query=memorable+animated+short+bruno+collet"}],keywords:"M\u00e9morable Bruno Collet Alzheimer"},
+  {id:44,title:"Ice Merchants",creator:"Jo\u00e3o Gonzalez",year:2022,duration:"14:00",type:"lonely",source:"festival",compress:"yes",dialogue:"none",
+   plot:"父子住悬崖边。每天生产冰块\u2192跳崖\u2192降落伞\u2192卖冰。危险的日常。",
    highlights:"昂西+奥斯卡提名。日常工作极端化。极简几何。零对白。",
    links:[{text:"YouTube搜索",url:"https://www.youtube.com/results?search_query=ice+merchants+animated+short+film"}],keywords:"Ice Merchants animated short"},
   {id:45,title:"Geri's Game",creator:"Pixar / Jan Pinkava",year:1997,duration:"4:50",type:"slapstick",source:"festival",compress:"yes",dialogue:"none",
@@ -590,29 +691,113 @@ const works = [
    links:[{text:"YouTube搜索",url:"https://www.youtube.com/results?search_query=blind+vaysha+animated+short+film"}],keywords:"Blind Vaysha animated short"},
 ];
 
+// ============ CREATIVE IDEAS DATA ============
+const creativeIdeas = [
+  {
+    id: 1,
+    num: "001",
+    title: "火锅毛肚大战 \u2192 猫之对峙幻想",
+    status: "discussion", // draft | discussion | final | rejected
+    statusLabel: "\ud83d\udd04 讨论中（V3完成）",
+    mdFile: "\u5267\u672c/001-\u706b\u951c\u6bdb\u809a\u5927\u6218.md",
+    oneLiner: "两只猫为最后一条鱼对峙，脑内各自幻想成史诗对决——海鸥趁机叼走了鱼",
+    phases: [
+      {
+        title: "\ud83d\udca1 原始想法",
+        content: "4个小伙伴一起吃火锅，最后一片毛肚下锅。4人对视，战意顿起，4双筷子扭打在一起难解难分！一个转场，几人化身为红不败、蓝洪七、黄小龙和黑达摩在清汤牛油双拼锅里拼起武功。毛肚几次易主，最终黄小龙偷鸡成功，回归现实之中，她在众人羡慕的目光中吃下毛肚——yue！出字幕：毛肚老了不好吃哦~！"
+      },
+      {
+        title: "\ud83d\udd0d 诊断分析",
+        content: '<div class="creative-checklist">' +
+          '<div class="creative-checklist-item pass">\u2705 一句话概念：通过</div>' +
+          '<div class="creative-checklist-item fail">\u274c 非人类主角：4个人类</div>' +
+          '<div class="creative-checklist-item fail">\u274c 跨文化理解：毛肚/火锅/武侠全是中国特定编码</div>' +
+          '<div class="creative-checklist-item warn">\u26a0\ufe0f 视觉钩子：武侠有潜力但对北美非钩子</div>' +
+          '<div class="creative-checklist-item pass">\u2705 结尾情感交付：反转punchline存在</div>' +
+          '<div class="creative-checklist-item fail">\u274c 视觉风格：未定义</div>' +
+          '<div class="creative-checklist-item fail">\u274c AI可实现：4角色武打=灾难</div>' +
+          '<div class="creative-checklist-item warn">\u26a0\ufe0f 分享冲动：中国观众会，北美不确定</div>' +
+          '</div>' +
+          '<p style="margin-top:12px"><strong>通过率：2/8 = 25%</strong> \u2192 需要大幅改编</p>' +
+          '<p style="margin-top:8px"><strong>\u6838\u5fc3\u95ee\u9898：</strong></p>' +
+          '<p>1\ufe0f\u20e3 概念超载（4个概念挤入1分钟）</p>' +
+          '<p>2\ufe0f\u20e3 文化壁垒（4层中国特定编码）</p>' +
+          '<p>3\ufe0f\u20e3 AIGC不可实现（4角色快速武打）</p>' +
+          '<p>4\ufe0f\u20e3 角色太多（1分钟无法建立4个角色）</p>' +
+          '<p style="margin-top:8px;color:#00b894"><strong>\u2705 \u503c\u5f97\u4fdd\u7559\u7684\u5185\u6838\uff1a</strong>"日常小事 \u2192 脑内史诗化幻想 \u2192 被现实打回原形"\u2014\u2014\u8fd9\u4e2a\u53cd\u5dee\u7ed3\u6784\u5168\u7403\u901a\u7528</p>'
+      },
+      {
+        title: "\u274c V2\uff1a\u5317\u7f8e\u5316\u6539\u7f16\uff08\u88ab\u5426\u51b3\uff09",
+        content: '<p><span class="version-tag version-v2">V2</span> 毛肚\u2192\u62ab\u8428\uff0c4\u4eba\u21924\u53ea\u52a8\u7269\uff0c\u6b66\u4fa0\u2192slapstick</p>' +
+          '<p style="margin-top:8px"><strong>\u5426\u51b3\u539f\u56e0\uff08\u7528\u6237\u53cd\u9988\uff09\uff1a</strong></p>' +
+          '<p>\u2022 4\u53ea\u52a8\u7269\u62a2\u62ab\u8428 \u2192 AIGC\u540c\u6837\u65e0\u6cd5\u5904\u74064\u89d2\u8272\u590d\u6742\u4e92\u52a8</p>' +
+          '<p>\u2022 "\u62a2\u62ab\u8428"\u592a\u666e\u901a\uff0c\u6ca1\u6709\u8bb0\u5fc6\u70b9</p>' +
+          '<p>\u2022 \u5931\u53bb\u4e86\u539f\u7248\u6700\u6709\u4ef7\u503c\u7684"\u5e7b\u60f3\u5316"\u8f6c\u573a</p>' +
+          '<p style="margin-top:8px;color:var(--creative-accent)"><strong>\u5173\u952e\u6d1e\u5bdf\uff1a</strong>\u95ee\u9898\u4e0d\u5728\u4e8e\u6362\u4ec0\u4e48\u98df\u7269\uff0c\u800c\u5728\u4e8e\u51cf\u5c11\u89d2\u8272\u3001\u907f\u514d\u590d\u6742\u52a8\u4f5c\u3001\u4fdd\u7559\u8bb0\u5fc6\u70b9</p>'
+      },
+      {
+        title: "\u2705 V3\uff1a\u732b\u4e4b\u5bf9\u5cd9\u5e7b\u60f3\uff08\u5f53\u524d\u7248\u672c\uff09",
+        content: '<p><span class="version-tag version-v3">V3</span> <strong>The Last Fish</strong> \u2014 60\u79d2</p>' +
+          '<p style="margin-top:8px">\u4e24\u53ea\u732b\u4e3a\u6700\u540e\u4e00\u6761\u9c7c\u5bf9\u5cd9\uff0c\u8111\u5185\u5404\u81ea\u5e7b\u60f3\u6210\u53f2\u8bd7\u5bf9\u51b3\u2014\u2014\u6d77\u9e25\u8d81\u673a\u53fc\u8d70\u4e86\u9c7c\u3002</p>' +
+          '<div class="storyboard">' +
+          '<div class="storyboard-shot"><div class="shot-header"><span class="shot-num">#1</span><span class="shot-time">0-5s</span><span class="shot-difficulty">\u2b50</span></div><div class="shot-desc">\u7801\u5934/\u6237\u5916\u684c\u9762\u3002\u4e00\u4e2a\u76d8\u5b50\uff0c\u6700\u540e\u4e00\u6761\u91d1\u9ec4\u9165\u8106\u7684\u9c7c\u3002\u6d77\u9e25\u53eb\u58f0\u3001\u6d77\u6d6a\u3002</div></div>' +
+          '<div class="storyboard-shot"><div class="shot-header"><span class="shot-num">#2</span><span class="shot-time">5-10s</span><span class="shot-difficulty">\u2b50\u2b50</span></div><div class="shot-desc">\u6a58\u732b\u548c\u9ed1\u732b\u4ece\u4e24\u4fa7\u8d70\u5165\u3002\u5bf9\u89c6\u3002\u7728\u773c\u3002</div></div>' +
+          '<div class="storyboard-shot"><div class="shot-header"><span class="shot-num">#3</span><span class="shot-time">10-15s</span><span class="shot-difficulty">\u2b50\u2b50</span></div><div class="shot-desc">\ud83e\udd20 \u6a58\u732b\u5e7b\u60f3\uff1a\u89d8\u53d8\u897f\u90e8\u7267\u538b\u4ebc\u3002\u6c99\u6f20\u3001\u98ce\u6c99\u3001\u624b\u60ac\u67aa\u5957\u3002\u8389\u5c3c\u7fc1\u5f0f\u53e3\u54e8\u914d\u4e50\u3002</div></div>' +
+          '<div class="storyboard-shot"><div class="shot-header"><span class="shot-num">#4</span><span class="shot-time">15-20s</span><span class="shot-difficulty">\u2b50\u2b50</span></div><div class="shot-desc">\u2694\ufe0f \u9ed1\u732b\u5e7b\u60f3\uff1a\u89d8\u53d8\u65e5\u672c\u6b66\u58eb\u3002\u6a31\u82b1\u3001\u7af9\u6797\u3001\u6b66\u58eb\u5200\u3002\u592a\u9f13\u9f13\u70b9\u3002</div></div>' +
+          '<div class="storyboard-shot"><div class="shot-header"><span class="shot-num">#5</span><span class="shot-time">20-30s</span><span class="shot-difficulty">\u2b50\u2b50</span></div><div class="shot-desc">\u4ea4\u53c9\u526a\u8f91\u52a0\u901f\uff1a\u62d4\u67aa\u624b \u2192 \u62d4\u5200\u624b \u2192 \u773c\u7741\u7279\u5199 \u2192 \u98ce\u6c99\u5377\u8d77 \u2192 \u6a31\u82b1\u66b4\u98ce\u3002\u4e24\u4e16\u754c\u5f00\u59cb\u878d\u5408\u3002</div></div>' +
+          '<div class="storyboard-shot"><div class="shot-header"><span class="shot-num">#6</span><span class="shot-time">30-35s</span><span class="shot-difficulty">\u2b50\u2b50\u2b50</span></div><div class="shot-desc">\u5e7b\u60f3\u5dc5\u5cf0\uff01\u5f00\u67aa\uff01\u631a\u5200\uff01\u4e24\u80a1\u529b\u91cf\u78b0\u649e\u2014\u2014\u767d\u5149\u95ea\u70c1\u2014\u2014</div></div>' +
+          '<div class="storyboard-shot"><div class="shot-header"><span class="shot-num">#7</span><span class="shot-time">35-42s</span><span class="shot-difficulty">\u2b50\u2b50\u2b50</span></div><div class="shot-desc">\u56de\u5230\u73b0\u5b9e\uff01\u4e24\u53ea\u732b\u540c\u65f6\u6251\u5411\u76d8\u5b50\u2014\u2014</div></div>' +
+          '<div class="storyboard-shot"><div class="shot-header"><span class="shot-num">#8</span><span class="shot-time">42-48s</span><span class="shot-difficulty">\u2b50\u2b50</span></div><div class="shot-desc">\u722a\u5b50\u62cd\u5728\u7a7a\u76d8\u5b50\u4e0a\u3002\u9c7c\u6ca1\u4e86\u3002\u56f0\u60d1\u3002\u9762\u9762\u76f8\u89d1\u3002</div></div>' +
+          '<div class="storyboard-shot"><div class="shot-header"><span class="shot-num">#9</span><span class="shot-time">48-55s</span><span class="shot-difficulty">\u2b50\u2b50</span></div><div class="shot-desc">\u9547\u5934\u62c9\u8fdc\u2014\u2014\u6d77\u9e25\u53fc\u7740\u9c7c\u98de\u8d70\u3002\u5b83\u751a\u81f3\u6ca1\u6709\u56de\u5934\u770b\u3002</div></div>' +
+          '<div class="storyboard-shot"><div class="shot-header"><span class="shot-num">#10</span><span class="shot-time">55-60s</span><span class="shot-difficulty">\u2b50</span></div><div class="shot-desc">Punchline\uff1a\u4e24\u732b\u5bf9\u89c6\u2192\u540c\u65f6\u8f6c\u5934\u2014\u2014\u8fdc\u5904\u8fd8\u6709\u53e6\u4e00\u6761\u9c7c\u3002\u773c\u7741\u518d\u6b21\u7728\u8d77\u2026\u5faa\u73af\u6697\u793a\u3002</div></div>' +
+          '</div>' +
+          '<div class="creative-checklist" style="margin-top:16px">' +
+          '<div class="creative-checklist-item pass">\u2705 \u4e00\u53e5\u8bdd\u6982\u5ff5</div>' +
+          '<div class="creative-checklist-item pass">\u2705 \u975e\u4eba\u7c7b\u4e3b\u89d2\uff08\u732b+\u6d77\u9e25\uff09</div>' +
+          '<div class="creative-checklist-item pass">\u2705 \u8de8\u6587\u5316\u7406\u89e3\uff08\u96f6\u5bf9\u767d\uff09</div>' +
+          '<div class="creative-checklist-item pass">\u2705 \u89c6\u89c9\u94a9\u5b50\uff08\u725b\u4ed4\u732b/\u6b66\u58eb\u732b=meme\uff09</div>' +
+          '<div class="creative-checklist-item pass">\u2705 \u7ed3\u5c3e\u60c5\u611f\u4ea4\u4ed8\uff08\u7b11+\u5faa\u73af\uff09</div>' +
+          '<div class="creative-checklist-item pass">\u2705 \u98ce\u683c\u8fa8\u8bc6\u5ea6\uff08\u4e09\u79cd\u98ce\u683c\u5207\u6362\uff09</div>' +
+          '<div class="creative-checklist-item pass">\u2705 AI\u53ef\u5b9e\u73b0\uff08\u7279\u5199+\u98ce\u683c\u5207\u6362\uff09</div>' +
+          '<div class="creative-checklist-item pass">\u2705 \u60f3\u5206\u4eab\uff08\u732b\u89c9\u5f97\u81ea\u5df1\u662f\u725b\u4ed4\uff09</div>' +
+          '</div>' +
+          '<p style="margin-top:12px;color:#00b894"><strong>\u901a\u8fc7\u7387\uff1a8/8 = 100% \u2705</strong></p>'
+      }
+    ],
+    evolution: [
+      "\u539f\u7248\u5185\u6838\u63d0\u53d6\uff1a\u201c\u65e5\u5e38\u5c0f\u4e8b\u2192\u8111\u5185\u53f2\u8bd7\u5316\u2192\u73b0\u5b9e\u6253\u8138\u201d",
+      "\u53bb\u9664\u6587\u5316\u7279\u5b9a\u5c42\uff1a\u706b\u9505\u2192\u7801\u5934 / \u6bdb\u809a\u2192\u9c7c / \u6b66\u4fa0\u2192\u5168\u7403\u5316\u5bf9\u51b3\u539f\u578b",
+      "\u9002\u914dAIGC\u7ea6\u675f\uff1a4\u89d2\u82722 / \u6253\u6597\u2192\u5bf9\u5cd9+\u5e7b\u60f3 / \u590d\u6742\u4e92\u52a8\u2192\u7279\u5199+\u98ce\u683c\u5207\u6362",
+      "\u589e\u52a0\u8bb0\u5fc6\u70b9\uff1a\u725b\u4ed4\u732b+\u6b66\u58eb\u732b = \u89c6\u89c9meme / \u6d77\u9e25\u5077\u9c7c = \u7b2c\u4e09\u65b9punchline",
+      "V3: \u300a\u732b\u4e4b\u5bf9\u5cd9\u5e7b\u60f3\u300b \u2705"
+    ]
+  }
+];
+
 const structures = [
-  {id:"A",name:"经典三拍",desc:"Setup → Development → Punchline",timeline:"[0-15s] Setup：角色+道具登场\n[15-45s] Development：冲突/误解/升级\n[45-60s] Punchline：视觉反转 + Button line",examples:"鸽子时光机、For the Birds",fit:"纯喜剧、gag类"},
-  {id:"B",name:"升级链",desc:"Escalation",timeline:"[0-10s] 建立动作/问题\n[10-30s] 尝试1→失败\n[30-50s] 尝试2→更大失败\n[50-70s] 尝试3→最大失败或意外成功\n[70-80s] Punchline",examples:"Knick Knack、Lifted、Cat Came Back",fit:"肢体喜剧、笨蛋尝试做事"},
-  {id:"C",name:"戏剧反讽",desc:"观众知道角色不知道的事",timeline:"[0-10s] 角色发现/面对某物\n[10-15s] 观众获知真相\n[15-50s] 角色基于错误认知行动\n[50-60s] 真相揭示 = Punchline",examples:"鸽子时光机、Partly Cloudy",fit:"喜剧、误解类"},
-  {id:"D",name:"循环 Loop",desc:"结尾回到开头但含义不同",timeline:"[0-20s] 展示循环\n[20-40s] 第二个循环(略变化)\n[40-55s] 打破/揭示循环含义\n[55-60s] 回到循环但含义已变",examples:"Afternoon Class、The Witness、Ice Merchants",fit:"日常观察、荒诞、黑幽"},
-  {id:"E",name:"蒙太奇",desc:"时间压缩 Montage",timeline:"[0-10s] 建立起点状态\n[10-50s] 快速切换画面序列\n[50-60s] 终点 vs 起点对比",examples:"Feast、Alike、Negative Space",fit:"情感类、人生故事"},
-  {id:"F",name:"反转揭示",desc:"Reveal / Twist",timeline:"[0-40s] 看似正常/温暖/搞笑\n[40-55s] 一个画面揭示不同真相\n[55-60s] 重新理解之前一切",examples:"Bao、Hair Love、Negative Space",fit:"情感冲击、黑幽"},
-  {id:"G",name:"碎片拼贴",desc:"Fragment Collage",timeline:"[全程] 围绕主题/问题呈现多个独立短画面\n无因果，靠主题统一\n结尾回到问题",examples:"Windshield Wiper、Cyriak",fit:"氛围片、实验、TikTok循环"},
+  {id:"A",name:"\u7ecf\u5178\u4e09\u62cd",desc:"Setup \u2192 Development \u2192 Punchline",timeline:"[0-15s] Setup\uff1a\u89d2\u8272+\u9053\u5177\u767b\u573a\n[15-45s] Development\uff1a\u51b2\u7a81/\u8bef\u89e3/\u5347\u7ea7\n[45-60s] Punchline\uff1a\u89c6\u89c9\u53cd\u8f6c + Button line",examples:"\u9e3d\u5b50\u65f6\u5149\u673a\u3001For the Birds",fit:"\u7eaf\u559c\u5267\u3001gag\u7c7b"},
+  {id:"B",name:"\u5347\u7ea7\u94fe",desc:"Escalation",timeline:"[0-10s] \u5efa\u7acb\u52a8\u4f5c/\u95ee\u9898\n[10-30s] \u5c1d\u8bd51\u2192\u5931\u8d25\n[30-50s] \u5c1d\u8bd52\u2192\u66f4\u5927\u5931\u8d25\n[50-70s] \u5c1d\u8bd53\u2192\u6700\u5927\u5931\u8d25\u6216\u610f\u5916\u6210\u529f\n[70-80s] Punchline",examples:"Knick Knack\u3001Lifted\u3001Cat Came Back",fit:"\u80a2\u4f53\u559c\u5267\u3001\u7b28\u86cb\u5c1d\u8bd5\u505a\u4e8b"},
+  {id:"C",name:"\u620f\u5267\u53cd\u8bbd",desc:"\u89c2\u4f17\u77e5\u9053\u89d2\u8272\u4e0d\u77e5\u9053\u7684\u4e8b",timeline:"[0-10s] \u89d2\u8272\u53d1\u73b0/\u9762\u5bf9\u67d0\u7269\n[10-15s] \u89c2\u4f17\u83b7\u77e5\u771f\u76f8\n[15-50s] \u89d2\u8272\u57fa\u4e8e\u9519\u8bef\u8ba4\u77e5\u884c\u52a8\n[50-60s] \u771f\u76f8\u63ed\u793a = Punchline",examples:"\u9e3d\u5b50\u65f6\u5149\u673a\u3001Partly Cloudy",fit:"\u559c\u5267\u3001\u8bef\u89e3\u7c7b"},
+  {id:"D",name:"\u5faa\u73af Loop",desc:"\u7ed3\u5c3e\u56de\u5230\u5f00\u5934\u4f46\u542b\u4e49\u4e0d\u540c",timeline:"[0-20s] \u5c55\u793a\u5faa\u73af\n[20-40s] \u7b2c\u4e8c\u4e2a\u5faa\u73af(\u7565\u53d8\u5316)\n[40-55s] \u6253\u7834/\u63ed\u793a\u5faa\u73af\u542b\u4e49\n[55-60s] \u56de\u5230\u5faa\u73af\u4f46\u542b\u4e49\u5df2\u53d8",examples:"Afternoon Class\u3001The Witness\u3001Ice Merchants",fit:"\u65e5\u5e38\u89c2\u5bdf\u3001\u8352\u8bde\u3001\u9ed1\u5e7d"},
+  {id:"E",name:"\u8499\u592a\u5947",desc:"\u65f6\u95f4\u538b\u7f29 Montage",timeline:"[0-10s] \u5efa\u7acb\u8d77\u70b9\u72b6\u6001\n[10-50s] \u5feb\u901f\u5207\u6362\u753b\u9762\u5e8f\u5217\n[50-60s] \u7ec8\u70b9 vs \u8d77\u70b9\u5bf9\u6bd4",examples:"Feast\u3001Alike\u3001Negative Space",fit:"\u60c5\u611f\u7c7b\u3001\u4eba\u751f\u6545\u4e8b"},
+  {id:"F",name:"\u53cd\u8f6c\u63ed\u793a",desc:"Reveal / Twist",timeline:"[0-40s] \u770b\u4f3c\u6b63\u5e38/\u6e29\u6696/\u641e\u7b11\n[40-55s] \u4e00\u4e2a\u753b\u9762\u63ed\u793a\u4e0d\u540c\u771f\u76f8\n[55-60s] \u91cd\u65b0\u7406\u89e3\u4e4b\u524d\u4e00\u5207",examples:"Bao\u3001Hair Love\u3001Negative Space",fit:"\u60c5\u611f\u51b2\u51fb\u3001\u9ed1\u5e7d"},
+  {id:"G",name:"\u788e\u7247\u62fc\u8d34",desc:"Fragment Collage",timeline:"[\u5168\u7a0b] \u56f4\u7ed5\u4e3b\u9898/\u95ee\u9898\u5448\u73b0\u591a\u4e2a\u72ec\u7acb\u77ed\u753b\u9762\n\u65e0\u56e0\u679c\uff0c\u9760\u4e3b\u9898\u7edf\u4e00\n\u7ed3\u5c3e\u56de\u5230\u95ee\u9898",examples:"Windshield Wiper\u3001Cyriak",fit:"\u6c1b\u56f4\u7247\u3001\u5b9e\u9a8c\u3001TikTok\u5faa\u73af"},
 ];
 
 const directions = [
-  {medal:"🥇",title:"动物喜剧 + Slapstick + 戏剧反讽",time:"60秒",proto:"鸽子时光机 × For the Birds × Presto",why:"零对白、全年龄、高完播、强分享、AI可实现",struct:"经典三拍或升级链",visual:"皮克斯式3D",risk:"低"},
-  {medal:"🥈",title:"打工人荒诞 + 黑幽 + 情感反转",time:"90秒",proto:"丧尸清道夫 × WALL·E × Three Robots",why:"打工梗全球共鸣、机器人主角安全、结尾有深度",struct:"蒙太奇 + 反转揭示",visual:"原子朋克/风格化3D",risk:"中"},
-  {medal:"🥉",title:"\"如果XX做YY\" 恶搞混搭",time:"60-90秒",proto:"Cas van de Pol",why:"模板无限可复制、可蹭热点、黄金时长",struct:"经典三拍",visual:"皮克斯式可爱3D",risk:"低-中"},
-  {medal:"4️⃣",title:"荒诞/Deadpan + 风格化视觉",time:"30-60秒",proto:"worthikids × Cyriak",why:"Gen Z大市场、辨识度高、可系列化",struct:"碎片拼贴或循环",visual:"手工感3D或AI独特风格",risk:"中"},
-  {medal:"5️⃣",title:"视觉诗/氛围片",time:"60秒",proto:"The Frost × Windshield Wiper",why:"AI最擅长、制作门槛低、可走电影节",struct:"碎片拼贴",visual:"油画/超现实",risk:"高"},
+  {medal:"\ud83e\udd47",title:"\u52a8\u7269\u559c\u5267 + Slapstick + \u620f\u5267\u53cd\u8bbd",time:"60\u79d2",proto:"\u9e3d\u5b50\u65f6\u5149\u673a \u00d7 For the Birds \u00d7 Presto",why:"\u96f6\u5bf9\u767d\u3001\u5168\u5e74\u9f84\u3001\u9ad8\u5b8c\u64ad\u3001\u5f3a\u5206\u4eab\u3001AI\u53ef\u5b9e\u73b0",struct:"\u7ecf\u5178\u4e09\u62cd\u6216\u5347\u7ea7\u94fe",visual:"\u76ae\u514b\u65af\u5f0f3D",risk:"\u4f4e"},
+  {medal:"\ud83e\udd48",title:"\u6253\u5de5\u4eba\u8352\u8bde + \u9ed1\u5e7d + \u60c5\u611f\u53cd\u8f6c",time:"90\u79d2",proto:"\u4e27\u5c38\u6e05\u9053\u592b \u00d7 WALL\u00b7E \u00d7 Three Robots",why:"\u6253\u5de5\u68a6\u5168\u7403\u5171\u9e23\u3001\u673a\u5668\u4eba\u4e3b\u89d2\u5b89\u5168\u3001\u7ed3\u5c3e\u6709\u6df1\u5ea6",struct:"\u8499\u592a\u5947 + \u53cd\u8f6c\u63ed\u793a",visual:"\u539f\u5b50\u670b\u514b/\u98ce\u683c\u53163D",risk:"\u4e2d"},
+  {medal:"\ud83e\udd49",title:"\"如果XX做YY\" 恶搞混搭",time:"60-90\u79d2",proto:"Cas van de Pol",why:"\u6a21\u677f\u65e0\u9650\u53ef\u590d\u5236\u3001\u53ef\u8e6d\u70ed\u70b9\u3001\u9ec4\u91d1\u65f6\u957f",struct:"\u7ecf\u5178\u4e09\u62cd",visual:"\u76ae\u514b\u65af\u5f0f\u53ef\u72313D",risk:"\u4f4e-\u4e2d"},
+  {medal:"4\ufe0f\u20e3",title:"\u8352\u8bde/Deadpan + \u98ce\u683c\u5316\u89c6\u89c9",time:"30-60\u79d2",proto:"worthikids \u00d7 Cyriak",why:"Gen Z\u5927\u5e02\u573a\u3001\u8fa8\u8bc6\u5ea6\u9ad8\u3001\u53ef\u7cfb\u5217\u5316",struct:"\u788e\u7247\u62fc\u8d34\u6216\u5faa\u73af",visual:"\u624b\u5de5\u611f3D\u6216AI\u72ec\u7279\u98ce\u683c",risk:"\u4e2d"},
+  {medal:"5\ufe0f\u20e3",title:"\u89c6\u89c9\u8bd7/\u6c1b\u56f4\u7247",time:"60\u79d2",proto:"The Frost \u00d7 Windshield Wiper",why:"AI\u6700\u64c5\u957f\u3001\u5236\u4f5c\u95e8\u69db\u4f4e\u3001\u53ef\u8d70\u7535\u5f71\u8282",struct:"\u788e\u7247\u62fc\u8d34",visual:"\u6cb9\u753b/\u8d85\u73b0\u5b9e",risk:"\u9ad8"},
 ];
 
 // ============ TYPE LABELS ============
-const typeLabels = {slapstick:"🤸 Slapstick",irony:"🎭 反讽",absurd:"🌀 荒诞",dark:"🖤 黑幽",warm:"☀️ 温暖",lonely:"🌙 孤独连接",nostalgia:"📼 怀旧",ai:"🤖 AI新锐"};
+const typeLabels = {slapstick:"\ud83e\udd38 Slapstick",irony:"\ud83c\udfad \u53cd\u8bbd",absurd:"\ud83c\udf00 \u8352\u8bde",dark:"\ud83d\udda4 \u9ed1\u5e7d",warm:"\u2600\ufe0f \u6e29\u6696",lonely:"\ud83c\udf19 \u5b64\u72ec\u8fde\u63a5",nostalgia:"\ud83d\udcfc \u6000\u65e7",ai:"\ud83e\udd16 AI\u65b0\u9510"};
 const typeClass = {slapstick:"tag-slapstick",irony:"tag-irony",absurd:"tag-absurd",dark:"tag-dark",warm:"tag-warm",lonely:"tag-lonely",nostalgia:"tag-nostalgia",ai:"tag-ai"};
-const sourceLabels = {streaming:"📱 流媒体",festival:"🏆 电影节",channel:"📺 头部账号"};
-const dialogueLabels = {none:"零对白",few:"极少对白",some:"有对白"};
+const sourceLabels = {streaming:"\ud83d\udcf1 \u6d41\u5a92\u4f53",festival:"\ud83c\udfc6 \u7535\u5f71\u8282",channel:"\ud83d\udcfa \u5934\u90e8\u8d26\u53f7"};
+const dialogueLabels = {none:"\u96f6\u5bf9\u767d",few:"\u6781\u5c11\u5bf9\u767d",some:"\u6709\u5bf9\u767d"};
+const statusClass = {draft:"status-draft",discussion:"status-discussion",final:"status-final",rejected:"status-rejected"};
 
 // ============ RENDER CARDS ============
 function renderCards(data) {
@@ -627,27 +812,27 @@ function renderCards(data) {
       <div class="card-tags">
         <span class="tag ${typeClass[w.type]}">${typeLabels[w.type]}</span>
         <span class="tag tag-source">${sourceLabels[w.source]}</span>
-        <span class="tag tag-compress ${w.compress==='yes'?'tag-compress-yes':'tag-compress-maybe'}">${w.compress==='yes'?'✅ 可压缩':'⚠️ 需调整'}</span>
+        <span class="tag tag-compress ${w.compress==='yes'?'tag-compress-yes':'tag-compress-maybe'}">${w.compress==='yes'?'\u2705 \u53ef\u538b\u7f29':'\u26a0\ufe0f \u9700\u8c03\u6574'}</span>
         <span class="tag tag-dialogue">${dialogueLabels[w.dialogue]}</span>
       </div>
       <div class="card-plot">${w.plot}</div>
-      <div class="card-expand" onclick="toggleDetail(${w.id})">▶ 展开完整故事与分析</div>
+      <div class="card-expand" onclick="toggleDetail(${w.id})">\u25b6 \u5c55\u5f00\u5b8c\u6574\u6545\u4e8b\u4e0e\u5206\u6790</div>
       <div class="card-detail" id="detail-${w.id}">
-        ${w.fullStory ? '<div style="font-size:13px;color:var(--text);line-height:1.7;margin-bottom:12px;padding:12px;background:var(--bg);border-radius:8px;border-left:3px solid var(--accent2)"><strong style="color:var(--accent2)">📖 完整剧情：</strong><br>'+w.fullStory+'</div>' : ''}
-        <div style="font-size:13px;color:var(--text);line-height:1.7;margin-bottom:12px;padding:12px;background:var(--bg);border-radius:8px;border-left:3px solid var(--accent)"><strong style="color:var(--accent)">💡 亮点分析：</strong><br>${w.fullHighlights||w.highlights}</div>
-        <div class="card-links">${w.links.map(l=>`<a href="${l.url}" target="_blank">${l.text} ↗</a>`).join('')}</div>
-        <div style="margin-top:8px;font-size:12px;color:var(--text3)">🔍 搜索：${w.keywords}</div>
+        ${w.fullStory ? '<div style="font-size:13px;color:var(--text);line-height:1.7;margin-bottom:12px;padding:12px;background:var(--bg);border-radius:8px;border-left:3px solid var(--accent2)"><strong style="color:var(--accent2)">\ud83d\udcd6 \u5b8c\u6574\u5267\u60c5\uff1a</strong><br>'+w.fullStory+'</div>' : ''}
+        <div style="font-size:13px;color:var(--text);line-height:1.7;margin-bottom:12px;padding:12px;background:var(--bg);border-radius:8px;border-left:3px solid var(--accent)"><strong style="color:var(--accent)">\ud83d\udca1 \u4eae\u70b9\u5206\u6790\uff1a</strong><br>${w.fullHighlights||w.highlights}</div>
+        <div class="card-links">${w.links.map(l=>`<a href="${l.url}" target="_blank">${l.text} \u2197</a>`).join('')}</div>
+        <div style="margin-top:8px;font-size:12px;color:var(--text3)">\ud83d\udd0d \u641c\u7d22\uff1a${w.keywords}</div>
       </div>
     </div>
   `).join('');
-  document.getElementById('result-count').textContent = `显示 ${data.length} / ${works.length} 部作品`;
+  document.getElementById('result-count').textContent = `\u663e\u793a ${data.length} / ${works.length} \u90e8\u4f5c\u54c1`;
 }
 
 function toggleDetail(id) {
   const d = document.getElementById('detail-'+id);
   d.classList.toggle('open');
   const btn = d.previousElementSibling;
-  btn.textContent = d.classList.contains('open') ? '▼ 收起' : '▶ 展开亮点与链接';
+  btn.textContent = d.classList.contains('open') ? '\u25bc \u6536\u8d77' : '\u25b6 \u5c55\u5f00\u4eae\u70b9\u4e0e\u94fe\u63a5';
 }
 
 // ============ FILTERS ============
@@ -675,8 +860,10 @@ function applyFilters() {
 }
 
 // ============ SECTIONS ============
+const allSections = ['works','rules','structures','directions','formula','comparison','creative'];
+
 function showSection(name) {
-  ['works','rules','structures','directions','formula','comparison'].forEach(s => {
+  allSections.forEach(s => {
     document.getElementById('sec-'+s).classList.toggle('hidden', s!==name);
     document.getElementById('nav-'+s).classList.toggle('active', s===name);
   });
@@ -695,8 +882,8 @@ function showStruct(idx) {
     <h3 style="color:var(--accent);margin-bottom:4px">${s.id}. ${s.name}</h3>
     <p style="color:var(--text2);margin-bottom:12px">${s.desc}</p>
     <pre>${s.timeline}</pre>
-    <p class="struct-example"><strong>代表作品：</strong>${s.examples}</p>
-    <p class="struct-example"><strong>适合：</strong>${s.fit}</p>
+    <p class="struct-example"><strong>\u4ee3\u8868\u4f5c\u54c1\uff1a</strong>${s.examples}</p>
+    <p class="struct-example"><strong>\u9002\u5408\uff1a</strong>${s.fit}</p>
   `;
 }
 
@@ -706,13 +893,13 @@ function renderDirections() {
     <div class="dir-card">
       <div class="medal">${d.medal}</div>
       <h3>${d.title}</h3>
-      <p><strong>时长：</strong>${d.time}</p>
-      <p><strong>原型：</strong>${d.proto}</p>
+      <p><strong>\u65f6\u957f\uff1a</strong>${d.time}</p>
+      <p><strong>\u539f\u578b\uff1a</strong>${d.proto}</p>
       <p>${d.why}</p>
       <div class="dir-meta">
-        <div>结构：${d.struct}</div>
-        <div>视觉：${d.visual}</div>
-        <div>风险：${d.risk}</div>
+        <div>\u7ed3\u6784\uff1a${d.struct}</div>
+        <div>\u89c6\u89c9\uff1a${d.visual}</div>
+        <div>\u98ce\u9669\uff1a${d.risk}</div>
       </div>
     </div>
   `).join('');
@@ -725,20 +912,87 @@ function renderComparison() {
     <td><span class="tag ${typeClass[w.type]}" style="font-size:11px">${typeLabels[w.type]}</span></td>
     <td>${w.duration}</td>
     <td>${dialogueLabels[w.dialogue]}</td>
-    <td>${w.compress==='yes'?'✅':'⚠️'}</td>
+    <td>${w.compress==='yes'?'\u2705':'\u26a0\ufe0f'}</td>
     <td>${sourceLabels[w.source]}</td>
     <td>${w.year}</td>
   </tr>`).join('');
   document.getElementById('comparison-table').innerHTML = `<table>
-    <thead><tr><th>作品</th><th>类型</th><th>时长</th><th>对白</th><th>可压缩</th><th>来源</th><th>年份</th></tr></thead>
+    <thead><tr><th>\u4f5c\u54c1</th><th>\u7c7b\u578b</th><th>\u65f6\u957f</th><th>\u5bf9\u767d</th><th>\u53ef\u538b\u7f29</th><th>\u6765\u6e90</th><th>\u5e74\u4efd</th></tr></thead>
     <tbody>${rows}</tbody></table>`;
 }
+
+// ============ CREATIVE WORKSHOP ============
+function renderCreative(statusFilter) {
+  statusFilter = statusFilter || 'all';
+  const filtered = statusFilter === 'all' ? creativeIdeas : creativeIdeas.filter(c => c.status === statusFilter);
+  
+  const container = document.getElementById('creative-container');
+  container.innerHTML = filtered.map(idea => `
+    <div class="creative-card" id="creative-${idea.id}">
+      <div class="creative-card-header" onclick="toggleCreativeCard(${idea.id})">
+        <div>
+          <span class="creative-card-title"><span class="num">#${idea.num}</span>${idea.title}</span>
+          <div style="font-size:13px;color:var(--text2);margin-top:4px">\ud83d\udcdd ${idea.oneLiner}</div>
+        </div>
+        <span class="creative-status ${statusClass[idea.status]}">${idea.statusLabel}</span>
+      </div>
+      <div class="creative-card-body" id="creative-body-${idea.id}">
+        ${idea.phases.map((phase, pi) => `
+          <div class="creative-phase">
+            <div class="creative-phase-title" onclick="togglePhase(${idea.id}, ${pi})">
+              <span class="arrow" id="arrow-${idea.id}-${pi}">\u25b6</span>
+              ${phase.title}
+            </div>
+            <div class="creative-phase-content" id="phase-${idea.id}-${pi}">
+              ${phase.content}
+            </div>
+          </div>
+        `).join('')}
+        
+        <div class="creative-summary-box">
+          <h4>\ud83d\udce8 \u6539\u7f16\u8def\u5f84</h4>
+          <div class="evolution-flow">
+            ${idea.evolution.map((step, si) => 
+              `<div class="evolution-step">${step}</div>${si < idea.evolution.length-1 ? '<span class="evolution-arrow">\u2192</span>' : ''}`
+            ).join('')}
+          </div>
+        </div>
+        
+        <div style="margin-top:16px;font-size:12px;color:var(--text3)">
+          \ud83d\udcc1 \u5b8c\u6574\u6587\u6863\uff1a<a href="#">${idea.mdFile}</a>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleCreativeCard(id) {
+  const body = document.getElementById('creative-body-' + id);
+  body.classList.toggle('open');
+}
+
+function togglePhase(ideaId, phaseIdx) {
+  const content = document.getElementById('phase-' + ideaId + '-' + phaseIdx);
+  const arrow = document.getElementById('arrow-' + ideaId + '-' + phaseIdx);
+  content.classList.toggle('open');
+  arrow.classList.toggle('open');
+}
+
+// Creative filters
+document.querySelectorAll('.creative-filter-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.creative-filter-btn').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    renderCreative(this.dataset.status);
+  });
+});
 
 // ============ INIT ============
 renderCards(works);
 renderStructures();
 renderDirections();
 renderComparison();
+renderCreative('all');
 </script>
 </body>
 </html>
