@@ -51,7 +51,15 @@ const directions = [
   {medal:"5️⃣", title:"视觉诗/氛围片", time:"60秒",
    proto:"The Frost × Windshield Wiper × Cyriak",
    why:"AI最擅长的方向、制作门槛低、可走电影节线",
-   struct:"碎片拼贴", visual:"油画/超现实", risk:"🔴 高（流媒体传播力不确定）"}
+   struct:"碎片拼贴", visual:"油画/超现实", risk:"🔴 高（流媒体传播力不确定）"},
+  {medal:"6️⃣", title:"游戏PV式叙事短片 + 音乐驱动", time:"90-120秒",
+   proto:"Arcane ENEMY × 米哈游角色PV × Last Bastion × On Your Mark",
+   why:"叙事密度极高、音乐替代对白、三渲二/油画3D在北美惊艳度高、游戏玩家圈层传播力强",
+   struct:"蒙太奇 + 音乐节拍同步", visual:"三渲二/Arcane式油画3D", risk:"🟡 中（需要强配乐+高视觉水准）"},
+  {medal:"7️⃣", title:"东方美学 × AI（水墨/Anime）", time:"60-90秒",
+   proto:"山水情 × PUPARIA × 秋实 × 新海诚",
+   why:"你的审美基因=核心竞争力、水墨/anime是AI风格迁移的强项但北美极少人做=蓝海、可走电影节线也可走流媒体",
+   struct:"蒙太奇或碎片拼贴", visual:"水墨/anime/三渲二", risk:"🟡 中（需找到东方美学+北美叙事的平衡点）"}
 ];
 
 // ============ CREATIVE IDEAS DATA ============

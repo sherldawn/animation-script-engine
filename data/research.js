@@ -37,19 +37,24 @@ const projectOverview = {
     {done:true, text:"流媒体线拆片-情感类（温暖/孤独/怀旧/AI新锐 各Top5 = 20部）"},
     {done:true, text:"流媒体线-头部账号Top3（6频道x3 = 18部）"},
     {done:true, text:"传统电影节线拆片（皮克斯/奥斯卡/昂西 = 15+部）"},
-    {done:true, text:"规律总结（10条规律 + 5个创作方向 + V1.5公式 + 检查清单）"},
-    {done:true, text:"001火锅毛肚大战 V1-V3 迭代"},
-    {done:true, text:"批量创意20（21个公式拼配创意）"},
+    {done:true, text:"规律总结V2.0（11条规律 + 5个创作方向 + V2.0公式 + 检查清单）"},
+    {done:true, text:"001火锅毛肚大战 V1-V4 迭代"},
+    {done:true, text:"批量创意20（20个公式拼配创意）"},
+    {done:true, text:"维度10：日本/亚洲美学（今敏/新海诚/宮崎駿/湯浅/PUPARIA等 8+部）"},
+    {done:true, text:"维度10续：中国水墨（山水情/小蝌蚪/秋实/Dam Keeper等 4部）"},
+    {done:true, text:"维度11：游戏PV/CG（Riot×3/暴雪×2/米哈游×2/Cuphead/Hollow Knight 9部）"},
+    {done:true, text:"维度12：音乐MV（Gorillaz/A-ha/Daft Punk/YOASOBI/Eve/Tool/Radiohead 8部）"},
+    {done:true, text:"维度13：商业+社媒+AI补充（6部）+ 经典补漏（10部）"},
+    {done:true, text:"规律总结V3.0（15条规律 + 7个创作方向 + V3.0公式 + 12项检查清单）"},
     {done:false, text:"用户选择感兴趣/擅长的方向"},
     {done:false, text:"共创3-5个剧本"},
     {done:false, text:"AI工具链测试"},
-    {done:false, text:"变现路径分析"},
-    {done:false, text:"创作方法论V2.0"}
+    {done:false, text:"变现路径分析"}
   ],
   keyReminders: [
     "目标受众是<strong>北美市场</strong>，所有分析和剧本都要以英语世界的文化语境为基准",
     "时长上限<strong>2分钟</strong>，理想时长<strong>45-90秒</strong>",
-    "核心公式V1.0：<code>非人类主角 + 一个核心道具/设定 + 戏剧性反讽 + 视觉punchline + 强结尾</code>",
+    "核心公式V3.0：见 <code>data/rules.js</code>，含音乐驱动+东方美学+文化混搭",
     "优先做能「动手验证」的事，而不是只停留在桌面调研"
   ]
 };
@@ -253,6 +258,73 @@ const festivalInsights = {
     {pattern:"一个概念/一句话前提", works:"Blind Vaysha、Day & Night、Float", strategy:"概念展示30s+发展60s+反转30s"},
     {pattern:"物品/道具驱动", works:"Paperman、Negative Space、Geri's Game", strategy:"一个道具的「旅程」压缩到90s"},
     {pattern:"反复失败到最终成功/认命", works:"Knick Knack、Cat Came Back、Lifted", strategy:"3次失败x20s+结局20s=80s"},
-    {pattern:"颜色/形态变化=情感变化", works:"Alike、Memorable、Ryan", strategy:"蒙太奇式快速变化60s+静止结尾30s"}
+    {pattern:"颜色/形态变化=情感变化", works:"Alike、Memorable、Ryan", strategy:"蒙太奇式快速变化60s+静止结尾30s"},
+    {pattern:"音乐节拍驱动剪辑", works:"ENEMY、On Your Mark、K/DA", strategy:"找一首90s曲子→按节拍分镜→画面填充节拍间隙"},
+    {pattern:"微观世界=宏大冒险", works:"Piper、Boro、秋实、Hollow Knight", strategy:"虫/小动物视角→日常物体巨大化=天然视觉奇观"}
+  ]
+};
+
+// ---- NEW DIMENSIONS INSIGHTS (V3.0, from 98 works) ----
+const newDimensionInsights = {
+  title: "新维度交叉分析（维度10-13）",
+  dimensions: [
+    {
+      id: "dim10",
+      name: "维度10：日本/亚洲动画美学",
+      worksCount: 12,
+      keyFindings: [
+        "「一人制作」模式的精神原型——新海诚(1999)→玉川真吾(2020)→AI时代创作者(2025)",
+        "日本短片偏好「循环」和「反转」结构，而非北美常见的「升级链」和「三拍」",
+        "水彩/水墨质感=AI风格迁移的最佳方向之一（积木之家、Rain Town、山水情）",
+        "「日常→超现实」的转化=今敏Ohayo的核心手法，也是AI视频变形的天然强项",
+        "anime三渲二在北美已从亚文化变为主流（Arcane艾美奖+米哈游全球营收）"
+      ],
+      forOurProject: "你的中日美学背景=其他北美创作者不具备的差异化。水墨/anime+AI=蓝海方向。"
+    },
+    {
+      id: "dim11",
+      name: "维度11：游戏PV/CG动画",
+      worksCount: 9,
+      keyFindings: [
+        "Riot Fortiche=当今叙事密度最高的短片工作室（2-3min建立角色+世界观+情感）",
+        "暴雪CG证明零对白也能做出WALL·E级情感弧线（Last Bastion）",
+        "米哈游=中日美学融合的商业巅峰（三渲二+中国古典悲剧+全球发行）",
+        "游戏PV的核心技巧：用「已有IP认知」降低解释成本——我们可用「通用文化符号」替代",
+        "独立游戏（Cuphead/Hollow Knight）证明极致风格化=核心竞争力"
+      ],
+      forOurProject: "学习游戏PV的叙事压缩技巧。音乐+蒙太奇+三渲二=可实现的高质量方向。"
+    },
+    {
+      id: "dim12",
+      name: "维度12：音乐驱动/MV动画",
+      worksCount: 8,
+      keyFindings: [
+        "音乐=最被低估的短片叙事工具。零对白短片中配乐承担50%+叙事功能",
+        "Gorillaz证明虚拟角色+音乐=持续20年的IP生命力",
+        "A-ha Take On Me证明AI风格迁移（真人→素描）的经典先驱形态",
+        "Daft Punk×松本零士=法国电音×日本动画的终极融合——文化混搭=传播核弹",
+        "YOASOBI/Eve证明anime MV在北美的接受度已经非常高——不需要「去日本化」"
+      ],
+      forOurProject: "先选音乐/节奏再做画面。AI音乐(Suno/Udio)+AI视频=全AI工作流的可能性。"
+    },
+    {
+      id: "dim13",
+      name: "维度13：商业/品牌 + 社媒原生",
+      worksCount: 6,
+      keyFindings: [
+        "最好的品牌动画从不提产品——Chipotle/John Lewis讲价值观不讲功能",
+        "2分钟品牌动画的情感设计和独立短片完全相同",
+        "TikTok原生动画（DomTomato等）证明「丑但有趣」>「美但无聊」",
+        "AI动画在社媒已成主流模板（Kling猫厨师类），但同质化严重=需要差异化",
+        "Veo3声音同步=AI视频的下一个革命点，解决最大痛点"
+      ],
+      forOurProject: "社媒是验证场（快速测试）。品牌合作是变现路径。差异化=不做皮克斯猫，做水墨猫/anime猫。"
+    }
+  ],
+  crossDimensionPatterns: [
+    {pattern:"东西方美学融合", evidence:"K/DA(韩流×游戏×anime)、Interstella(法国电音×日本动画)、猫之功夫幻想(牛仔×功夫)、米哈游(中国开发×anime)", insight:"文化混搭不是妥协，是乘法——两种文化各自的粉丝都会被吸引"},
+    {pattern:"音乐驱动=跨语言通行证", evidence:"On Your Mark/ENEMY/Interstella/YOASOBI全球爆发", insight:"在零对白的基础上，用音乐（而非旁白）驱动叙事节奏，可以同时满足「跨语言」和「情感深度」"},
+    {pattern:"一人工作室的黄金时代", evidence:"新海诚→玉川真吾→刘子钰→Cyriak→worthikids", insight:"AI降低了制作门槛但没降低审美门槛。个人风格+极简制作+AI工具=未来主流创作模式"},
+    {pattern:"微观世界=天然视觉奇观", evidence:"Piper(海滩)→Boro(叶子)→秋实(瓜藤)→Hollow Knight(虫穴)", insight:"把镜头对准小东西=一切都变成史诗。AI的环境渲染能力特别适合微观世界"}
   ]
 };
