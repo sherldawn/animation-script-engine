@@ -66,11 +66,11 @@ const creativeIdeas = [
   {
     id: 1,
     num: "001",
-    title: "火锅毛肚大战 → 猫之对峙幻想",
+    title: "火锅毛肚大战 → 猫之功夫幻想",
     status: "discussion",
-    statusLabel: "🔄 讨论中（V3完成）",
+    statusLabel: "🔄 讨论中（V4完成，待确认）",
     mdFile: "剧本/001-火锅毛肚大战.md",
-    oneLiner: "两只猫为最后一条鱼对峙，脑内各自幻想成史诗对决——海鸥趁机叼走了鱼",
+    oneLiner: "两只家猫看武侠片被罐头触发脑内功夫对决——激光笔打断一切",
     phases: [
       {
         title: "💡 原始想法",
@@ -94,52 +94,89 @@ const creativeIdeas = [
           '<p>2️⃣ 文化壁垒（4层中国特定编码）</p>' +
           '<p>3️⃣ AIGC不可实现（4角色快速武打）</p>' +
           '<p>4️⃣ 角色太多（1分钟无法建立4个角色）</p>' +
-          '<p style="margin-top:8px;color:#00b894"><strong>✅ 值得保留的内核：</strong>"日常小事 → 脑内史诗化幻想 → 被现实打回原形"——这个反差结构全球通用</p>'
+          '<p style="margin-top:8px;color:#00b894"><strong>✅ 值得保留的内核：</strong>「日常小事 → 脑内史诗化幻想 → 被现实打回原形」——这个反差结构全球通用</p>'
       },
       {
         title: "❌ V2：北美化改编（被否决）",
         content: '<p><span style="display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;background:rgba(253,203,110,.2);color:#fdcb6e">V2</span> 毛肚→披萨，4人→4只动物，武侠→slapstick</p>' +
           '<p style="margin-top:8px"><strong>否决原因（用户反馈）：</strong></p>' +
           '<p>• 4只动物抢披萨 → AIGC同样无法处理4角色复杂互动</p>' +
-          '<p>• "抢披萨"太普通，没有记忆点</p>' +
-          '<p>• 失去了原版最有价值的"幻想化"转场</p>' +
+          '<p>• 「抢披萨」太普通，没有记忆点</p>' +
+          '<p>• 失去了原版最有价值的「幻想化」转场</p>' +
           '<p style="margin-top:8px;color:#fdcb6e"><strong>关键洞察：</strong>问题不在于换什么食物，而在于减少角色、避免复杂动作、保留记忆点</p>'
       },
       {
-        title: "✅ V3：猫之对峙幻想（当前版本）",
+        title: "⬆️ V3：猫之对峙幻想（过渡版本）",
         content: '<p><span style="display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;background:rgba(0,184,148,.2);color:#00b894">V3</span> <strong>The Last Fish</strong> — 60秒</p>' +
           '<p style="margin-top:8px">两只猫为最后一条鱼对峙，脑内各自幻想成史诗对决——海鸥趁机叼走了鱼。</p>' +
-          '<div style="margin-top:12px">' +
-          '<div style="background:var(--card);border-radius:6px;padding:10px 12px;margin-top:6px;border-left:3px solid var(--accent2);font-size:12px"><div style="display:flex;justify-content:space-between"><strong style="color:var(--accent2)">#1</strong><span style="color:var(--text3)">0-5s ⭐</span></div>码头/户外桌面。一个盘子，最后一条金黄酥脆的鱼。海鸥叫声、海浪。</div>' +
-          '<div style="background:var(--card);border-radius:6px;padding:10px 12px;margin-top:6px;border-left:3px solid var(--accent2);font-size:12px"><div style="display:flex;justify-content:space-between"><strong style="color:var(--accent2)">#2</strong><span style="color:var(--text3)">5-10s ⭐⭐</span></div>橘猫和黑猫从两侧走入。对视。眯眼。</div>' +
-          '<div style="background:var(--card);border-radius:6px;padding:10px 12px;margin-top:6px;border-left:3px solid var(--accent2);font-size:12px"><div style="display:flex;justify-content:space-between"><strong style="color:var(--accent2)">#3</strong><span style="color:var(--text3)">10-15s ⭐⭐</span></div>🤠 橘猫幻想：蜕变西部牛仔。沙漠、风沙、手悬枪套。莫里康内式口哨配乐。</div>' +
-          '<div style="background:var(--card);border-radius:6px;padding:10px 12px;margin-top:6px;border-left:3px solid var(--accent2);font-size:12px"><div style="display:flex;justify-content:space-between"><strong style="color:var(--accent2)">#4</strong><span style="color:var(--text3)">15-20s ⭐⭐</span></div>⚔️ 黑猫幻想：蜕变日本武士。樱花、竹林、武士刀。太鼓鼓点。</div>' +
-          '<div style="background:var(--card);border-radius:6px;padding:10px 12px;margin-top:6px;border-left:3px solid var(--accent2);font-size:12px"><div style="display:flex;justify-content:space-between"><strong style="color:var(--accent2)">#5</strong><span style="color:var(--text3)">20-30s ⭐⭐</span></div>交叉剪辑加速：拔枪手 → 拔刀手 → 眼睛特写 → 风沙卷起 → 樱花暴风。两世界开始融合。</div>' +
-          '<div style="background:var(--card);border-radius:6px;padding:10px 12px;margin-top:6px;border-left:3px solid var(--accent2);font-size:12px"><div style="display:flex;justify-content:space-between"><strong style="color:var(--accent2)">#6</strong><span style="color:var(--text3)">30-35s ⭐⭐⭐</span></div>幻想巅峰！开枪！挥刀！两股力量碰撞——白光闪烁——</div>' +
-          '<div style="background:var(--card);border-radius:6px;padding:10px 12px;margin-top:6px;border-left:3px solid var(--accent2);font-size:12px"><div style="display:flex;justify-content:space-between"><strong style="color:var(--accent2)">#7</strong><span style="color:var(--text3)">35-42s ⭐⭐⭐</span></div>回到现实！两只猫同时扑向盘子——</div>' +
-          '<div style="background:var(--card);border-radius:6px;padding:10px 12px;margin-top:6px;border-left:3px solid var(--accent2);font-size:12px"><div style="display:flex;justify-content:space-between"><strong style="color:var(--accent2)">#8</strong><span style="color:var(--text3)">42-48s ⭐⭐</span></div>爪子拍在空盘子上。鱼没了。困惑。面面相觑。</div>' +
-          '<div style="background:var(--card);border-radius:6px;padding:10px 12px;margin-top:6px;border-left:3px solid var(--accent2);font-size:12px"><div style="display:flex;justify-content:space-between"><strong style="color:var(--accent2)">#9</strong><span style="color:var(--text3)">48-55s ⭐⭐</span></div>镜头拉远——海鸥叼着鱼飞走。它甚至没有回头看。</div>' +
-          '<div style="background:var(--card);border-radius:6px;padding:10px 12px;margin-top:6px;border-left:3px solid var(--accent2);font-size:12px"><div style="display:flex;justify-content:space-between"><strong style="color:var(--accent2)">#10</strong><span style="color:var(--text3)">55-60s ⭐</span></div>Punchline：两猫对视→同时转头——远处还有另一条鱼。眼睛再次眯起…循环暗示。</div>' +
+          '<p style="margin-top:8px">牛仔猫(西部荒野) vs 武士猫(日式庭院)。交叉剪辑升级→白光碰撞→回到现实扑空→海鸥叼鱼→循环暗示。</p>' +
+          '<p style="margin-top:8px;color:#00b894"><strong>通过率：8/8 = 100% ✅</strong> 但缺乏流行文化锚点和具体摄影方案。</p>'
+      },
+      {
+        title: "✅ V4：猫之功夫幻想（当前版本）",
+        content: '<p><span style="display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;background:rgba(108,92,231,.2);color:#6c5ce7">V4</span> <strong>Kung Fu Cats</strong> — 60秒</p>' +
+          '<p style="margin-top:8px"><strong>一句话</strong>：两只家猫看武侠片被罐头触发脑内功夫对决——主人的激光笔打断一切。</p>' +
+
+          '<div style="margin-top:12px;border:1px solid var(--border);border-radius:8px;padding:12px;background:var(--bg)">' +
+          '<p style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:8px">📖 完整故事</p>' +
+          '<p style="font-size:12px;color:var(--text2);line-height:1.7">' +
+          '客厅地板，鱼眼镜头低角度。橘猫和黑猫并排趴在电视前，电视正放功夫片。两猫耳朵随武打声效同步抖动。<br><br>' +
+          '主人拖鞋经过——留下一个打开的金枪鱼罐头。两猫瞳孔同时放大。对视。电视里响起对峙配乐。<br><br>' +
+          '<strong>幻想触发——</strong><br>' +
+          '🤠 橘猫 → 黄昏荒野：克林特·伊斯特伍德斗篷，叼猫薄荷草，星际牛仔Spike式慵懒站姿。腰间武器：一把逗猫棒。莫里康内口哨响起。<br><br>' +
+          '🥋 黑猫 → 竹林道馆：李小龙经典黄色条纹连体衣(杀死比尔新娘同款)，爪垫抹鼻尖——咏春起手式。太鼓鼓声隆隆。<br><br>' +
+          '现实中两猫弓背炸毛——幻想中牛仔猫瞇眼抽出逗猫棒，功夫猫发出无声怒吼。交叉剪辑越来越快：功夫猫飞踢→牛仔猫旋踢(Spike截拳道=李小龙影响→两猫武学同源！)→牛仔猫一爪打翻罐头——<br><br>' +
+          '<strong style="color:var(--red)">突然，一个红点出现在地板上。</strong><br><br>' +
+          '两猫同时石化。幻想世界像玻璃碎裂。功夫猫和牛仔猫帅气形象瞬间消失，回到两只毛茸茸的猫。忘记一切，疯狂追红点冲出画面。<br><br>' +
+          '镜头停在被打翻的罐头上。电视里功夫片刚好演到和解拥抱结局。</p>' +
           '</div>' +
-          '<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;margin-top:16px">' +
+
+          '<div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px">' +
+          '<div style="background:var(--bg);border-radius:6px;padding:10px;border-left:3px solid var(--accent)">' +
+          '<p style="font-size:11px;font-weight:700;color:var(--accent);margin-bottom:4px">🎬 摄影方案</p>' +
+          '<p style="font-size:11px;color:var(--text2);line-height:1.5">' +
+          '• 鱼眼低角度贯穿现实(猫视角=地板视角)<br>' +
+          '• 杀死比尔式：罐头内部往外看的「棺材视角」<br>' +
+          '• 莫里康内三连特写：眼→爪→眼<br>' +
+          '• 星际牛仔式：剪影逆光+jazz节奏切换<br>' +
+          '• 幻想2.35:1宽银幕 / 现实16:9 = 视觉反差</p></div>' +
+          '<div style="background:var(--bg);border-radius:6px;padding:10px;border-left:3px solid var(--accent3)">' +
+          '<p style="font-size:11px;font-weight:700;color:var(--accent3);margin-bottom:4px">🎨 美术风格</p>' +
+          '<p style="font-size:11px;color:var(--text2);line-height:1.5">' +
+          '• 现实：温暖居家色调，偏黄暖光，皮克斯渲染<br>' +
+          '• 牛仔幻想：黄昏橙红，粗粒赛璐珞胶片感<br>' +
+          '• 功夫幻想：翠竹绿+金色，水墨飞溅，东方美学<br>' +
+          '• 猫造型：幻想态保留猫头但身体直立如穿戏服</p></div>' +
+          '</div>' +
+
+          '<p style="margin-top:12px;font-size:12px;color:var(--text2)"><strong>V3→V4 升级点：</strong></p>' +
+          '<ul style="font-size:12px;color:var(--text2);padding-left:16px;line-height:1.6">' +
+          '<li>触发机制：码头争鱼 → 看功夫片+罐头(更自然的猫行为)</li>' +
+          '<li>流行文化锚点：通用牛仔/武士 → 星际牛仔Spike+杀死比尔+李小龙(北美秒懂)</li>' +
+          '<li>收尾方式：海鸥叼鱼 → 激光笔红点(更符合猫的本能弱点)</li>' +
+          '<li>新增完整摄影/美术方案</li>' +
+          '<li>「两猫武学同源」彩蛋(Spike截拳道=李小龙)</li>' +
+          '</ul>' +
+
+          '<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;margin-top:12px">' +
           '<div style="color:#00b894">✅ 一句话概念</div>' +
-          '<div style="color:#00b894">✅ 非人类主角（猫+海鸥）</div>' +
-          '<div style="color:#00b894">✅ 跨文化理解（零对白）</div>' +
-          '<div style="color:#00b894">✅ 视觉钩子（牛仔猫/武士猫=meme）</div>' +
-          '<div style="color:#00b894">✅ 结尾情感交付（笑+循环）</div>' +
-          '<div style="color:#00b894">✅ 风格辨识度（三种风格切换）</div>' +
+          '<div style="color:#00b894">✅ 非人类主角（2猫）</div>' +
+          '<div style="color:#00b894">✅ 跨文化（零对白+北美流行文化锚点）</div>' +
+          '<div style="color:#00b894">✅ 视觉钩子（牛仔猫/功夫猫=meme）</div>' +
+          '<div style="color:#00b894">✅ 结尾情感交付（激光笔打断+电视和解）</div>' +
+          '<div style="color:#00b894">✅ 风格辨识度（三种风格+宽幅切换）</div>' +
           '<div style="color:#00b894">✅ AI可实现（特写+风格切换）</div>' +
-          '<div style="color:#00b894">✅ 想分享（猫觉得自己是牛仔）</div>' +
+          '<div style="color:#00b894">✅ 想分享（猫cosplay经典角色）</div>' +
           '</div>' +
-          '<p style="margin-top:12px;color:#00b894"><strong>通过率：8/8 = 100% ✅</strong></p>'
+          '<p style="margin-top:8px;color:#6c5ce7"><strong>通过率：8/8 = 100% ✅ (V4增强版)</strong></p>'
       }
     ],
     evolution: [
       "原版内核提取：「日常小事→脑内史诗化→现实打脸」",
       "去除文化特定层：火锅→码头 / 毛肚→鱼 / 武侠→全球化对决原型",
       "适配AIGC约束：4角色→2 / 打斗→对峙+幻想 / 复杂互动→特写+风格切换",
-      "增加记忆点：牛仔猫+武士猫 = 视觉meme / 海鸥偷鱼 = 第三方punchline",
-      "V3:《猫之对峙幻想》 ✅"
+      "V3:《猫之对峙幻想》(牛仔vs武士+海鸥偷鱼)",
+      "V4:《猫之功夫幻想》(星际牛仔Spike+杀死比尔+激光笔+完整摄影美术方案) ✅"
     ]
   }
 ];

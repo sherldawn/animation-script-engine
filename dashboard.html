@@ -92,6 +92,7 @@ details>.inner strong{color:var(--text)}.bl{border-left:3px solid var(--accent2)
 <script src="data/config.js"></script>
 <script src="data/batch-ideas.js"></script>
 <script src="data/research.js"></script>
+<script src="data/rules.js"></script>
 <script>
 // ---- NAV ----
 document.querySelectorAll('.nav-btn').forEach(btn=>btn.addEventListener('click',()=>{
@@ -182,30 +183,12 @@ function renderWorksGrid(){
   document.getElementById('r-channels').innerHTML=h;
 })();
 
-// ---- 5. RULES ----
+// ---- 5. RULES (data-driven from rules.js) ----
 (function(){
   let h='';
-  h+=`<div class="formula" style="border-color:var(--gold)"><h3 style="color:var(--gold)">V2.0 公式（含AIGC约束）</h3><code>2分钟以下北美向AI动画 = 
-  一句话概念 + 非人类主角（动物 > 机器人 > 物品）
-  + 7种结构中选1种 + 零对白或极少对白  
-  + 风格化视觉（辨识度 > 精度）+ 1个视觉记忆点
-  + 强结尾（笑/泪/震/思）+ AIGC友好设计
-  + ≤2个主角，≤10个镜头</code></div>`;
-  h+=`<div class="formula" style="border-color:var(--accent2)"><h3>✅ 检查清单 V2.0</h3><div class="checklist"><label><input type="checkbox"> 一句话说清概念？</label><label><input type="checkbox"> 非人类主角？</label><label><input type="checkbox"> 不懂语言能看懂？</label><label><input type="checkbox"> 有「停下滑动」的画面？</label><label><input type="checkbox"> 结尾有情感交付？</label><label><input type="checkbox"> 视觉风格有辨识度？</label><label><input type="checkbox"> AI能实现？</label><label><input type="checkbox"> 看完想分享？</label><label><input type="checkbox"> 主角≤2？</label><label><input type="checkbox"> 镜头≤10？</label></div></div>`;
-  const R=[
-    {t:"规律1：一个概念",c:"2min以下只容得下一个概念。能一句话说清就行。"},
-    {t:"规律2：七种结构",c:"见「叙事结构」页。A经典三拍 B升级链 C戏剧反讽 D循环 E蒙太奇 F反转揭示 G碎片拼贴"},
-    {t:"规律3：结尾决定一切",c:"Punchline=笑着走 / Button line=回味 / 情感反转=泪 / 开放余韵=沉思 / 循环回归=不安 / 视觉升华=美"},
-    {t:"规律4：三个受众圈层",c:"圈层1全年龄（覆盖广）→ 圈层2 Gen Z（传播强）→ 圈层3影迷（口碑强）。优先打1或2。"},
-    {t:"规律5：幽默排名",c:"🥇Slapstick 🥈反差/Subversion 🥉Absurdist 4.Dark humor 5.Irony"},
-    {t:"规律6：情感排名",c:"🥇孤独→连接 🥈克服恐惧/成长 🥉亲子/代际 4.接受差异 5.怀旧/失去"},
-    {t:"规律7：视觉风格排名",c:"🥇皮克斯3D(AI⭐⭐⭐⭐/市场⭐⭐⭐⭐⭐) 🥈风格化3D 🥉扁平2D 4.油画(AI强) 5.极简线条"},
-    {t:"规律8：AI不完美=风格",c:"worthikids粗糙3D→定格感 / Cyriak变形→分形美学 / Sora伪影→梦境 / 丧尸清道夫不一致→废土粗粝"},
-    {t:"规律9：传播5要素",c:"🖼️视觉记忆点 💓情感触发 📸可截图引用 🎣结尾留钩子 ⚡低解释成本"},
-    {t:"规律10：平台匹配",c:"≤60s+punchline→TikTok/Shorts / 60-120s+情感→Shorts/X / AI话题→X / 高质量→YouTube / 系列→YouTube+TikTok"},
-    {t:"规律11：AIGC约束=创意约束",c:"✅单角色静态/慢动作 ✅表情特写 ✅环境氛围 ✅风格切换 ⚠️2角色互动 ❌多角色肢体 ❌快速动作 ❌精确物理"}
-  ];
-  h+=`<h2 style="font-size:18px;margin:18px 0 12px">📐 11条规律</h2><div class="grid g2">${R.map(r=>`<div class="card"><h3 style="color:var(--accent);font-size:14px;margin-bottom:6px">${r.t}</h3><p style="font-size:12px;color:var(--text2);line-height:1.5">${r.c}</p></div>`).join('')}</div>`;
+  h+=`<div class="formula" style="border-color:var(--gold)"><h3 style="color:var(--gold)">V2.0 公式（含AIGC约束）</h3><code>${formulaV2}</code></div>`;
+  h+=`<div class="formula" style="border-color:var(--accent2)"><h3>✅ 检查清单 V2.0</h3><div class="checklist">${checklist.map(c=>`<label><input type="checkbox"> ${c}</label>`).join('')}</div></div>`;
+  h+=`<h2 style="font-size:18px;margin:18px 0 12px">📐 ${rules.length}条规律</h2><div class="grid g2">${rules.map(r=>`<div class="card"><h3 style="color:var(--accent);font-size:14px;margin-bottom:6px">${r.title}</h3><p style="font-size:12px;color:var(--text2);line-height:1.5">${r.content}</p>${r.detail?`<details><summary>展开详情</summary><div class="inner">${r.detail}</div></details>`:''}</div>`).join('')}</div>`;
   document.getElementById('r-rules').innerHTML=h;
 })();
 
