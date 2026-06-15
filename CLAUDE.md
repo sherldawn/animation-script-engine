@@ -33,13 +33,16 @@
 
 ## 启动方式
 ```bash
-# 方式1：启动服务器（完整功能，含AI生成）
+# 方式1：直接打开（推荐，所有功能均可用，含AI生成）
+open dashboard.html
+# 或双击 dashboard-standalone.html（JS已内联）
+
+# 方式2：启动服务器（可选，不再是必需）
 python3 server.py
 open http://localhost:8888/dashboard.html
-
-# 方式2：独立版本（双击打开，无需服务器，含复制Prompt功能）
-open dashboard-standalone.html
 ```
+
+> **注意**：API已改为前端直连OpenRouter（不再需要server.py代理）。dashboard.html和standalone版本均可直接调用AI生成，只需设置OpenRouter API Key。
 
 ## 故事生成器功能
 - **Tag选择器**：6个维度（主角/类型/画风/情感/结构/时长），选2-6个标签

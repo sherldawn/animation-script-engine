@@ -87,7 +87,17 @@ details>.inner strong{color:var(--text)}.bl{border-left:3px solid var(--accent2)
 .gen-btn:disabled{opacity:.4;cursor:not-allowed}
 .gen-loading{text-align:center;padding:40px;color:var(--accent2);font-size:14px}
 @keyframes spin{to{transform:rotate(360deg)}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 .gen-loading::after{content:'';display:inline-block;width:16px;height:16px;border:2px solid var(--accent2);border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;margin-left:8px;vertical-align:middle}
+.gen-loading-fancy{text-align:center;padding:48px 20px;background:linear-gradient(135deg,rgba(0,206,201,.06),rgba(108,92,231,.06));border-radius:12px;border:1px dashed var(--accent2)}
+.gen-loading-fancy .spinner{width:40px;height:40px;border:3px solid var(--accent2);border-top-color:transparent;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 14px}
+.gen-loading-fancy .msg{color:var(--accent2);font-size:15px;font-weight:700;margin-bottom:6px}
+.gen-loading-fancy .sub{color:var(--text3);font-size:12px}
+.gen-result{animation:fadeInUp .4s ease both}
+.gen-result:nth-child(2){animation-delay:.08s}.gen-result:nth-child(3){animation-delay:.16s}.gen-result:nth-child(4){animation-delay:.24s}.gen-result:nth-child(5){animation-delay:.32s}
+.demo-presets{display:flex;gap:8px;margin:10px 0;flex-wrap:wrap}
+.demo-btn{padding:6px 14px;border-radius:8px;border:1px solid var(--gold);background:rgba(253,203,110,.08);color:var(--gold);font-size:12px;cursor:pointer;transition:.2s;font-weight:600}
+.demo-btn:hover{background:var(--gold);color:#222}
 .gen-api{background:var(--card);border-radius:8px;padding:12px;margin-bottom:14px;border:1px solid var(--border);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .gen-api input[type=password],.gen-api input[type=text]{background:var(--bg);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:6px;font-size:13px;width:320px}
 .gen-api button{padding:5px 12px;border-radius:6px;border:1px solid var(--accent2);background:rgba(0,206,201,.12);color:var(--accent2);font-size:12px;cursor:pointer}
@@ -324,7 +334,20 @@ function genCatLabel(cat){
   return tagRegistry[cat]?.label||cat;
 }
 
-// 10d. Tag selection
+// 10d. Demo presets (for video recording)
+const demoPresets=[
+  {name:'🐱 猫咪喜剧', tags:[{cat:'protagonist',val:'cat'},{cat:'type',val:'slapstick'},{cat:'artStyle',val:'pixar3d'},{cat:'duration',val:'s60'}]},
+  {name:'🤖 机器人孤独', tags:[{cat:'protagonist',val:'robot'},{cat:'emotion',val:'deepLone'},{cat:'artStyle',val:'inkwash'},{cat:'duration',val:'s90'}]},
+  {name:'🐦 鸟类荒诞', tags:[{cat:'protagonist',val:'bird'},{cat:'type',val:'absurd'},{cat:'artStyle',val:'stylized3d'},{cat:'emotion',val:'darkFun'}]},
+  {name:'🐛 微观冒险', tags:[{cat:'protagonist',val:'insect'},{cat:'emotion',val:'funTears'},{cat:'artStyle',val:'watercolor'},{cat:'duration',val:'s60'}]},
+];
+function loadPreset(idx){
+  genSel=[...demoPresets[idx].tags];
+  genResults=[];
+  renderGenerator();
+}
+
+// 10e. Tag selection
 function toggleGenTag(cat,val){
   const idx=genSel.findIndex(t=>t.cat===cat&&t.val===val);
   if(idx>=0) genSel.splice(idx,1);
@@ -422,27 +445,34 @@ function buildChatSystemPrompt(){
   return s;
 }
 
-// 10g. API calls (OpenRouter — OpenAI-compatible format)
+// 10g. API calls (Direct to OpenRouter — no proxy needed)
 async function callAPI(system,messages){
   const key=getApiKey();
   if(!key) throw new Error('请先设置OpenRouter API Key');
+  const allMessages=[];
+  if(system) allMessages.push({role:'system',content:system});
+  allMessages.push(...messages);
   try{
-    const resp=await fetch('/api/generate',{
+    const resp=await fetch('https://openrouter.ai/api/v1/chat/completions',{
       method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({apiKey:key, system, messages, model:getModel(), max_tokens:4096})
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':'Bearer '+key,
+        'HTTP-Referer':location.href,
+        'X-Title':'2min Animation Dashboard'
+      },
+      body:JSON.stringify({model:getModel(),max_tokens:4096,messages:allMessages})
     });
     if(!resp.ok){
       const err=await resp.json().catch(()=>({error:`HTTP ${resp.status}`}));
-      const msg=typeof err.error==='string'?err.error:JSON.stringify(err.error);
-      throw new Error(msg);
+      const em=err.error?.message||err.error||(typeof err==='string'?err:JSON.stringify(err));
+      throw new Error(typeof em==='string'?em:JSON.stringify(em));
     }
     const data=await resp.json();
-    // OpenRouter returns OpenAI-compatible: choices[0].message.content
-    return data.choices?.[0]?.message?.content || '';
+    return data.choices?.[0]?.message?.content||'';
   }catch(e){
     if(e.message==='Failed to fetch'||e.message.includes('NetworkError'))
-      throw new Error('无法连接服务器。请确保已运行: python3 server.py');
+      throw new Error('网络错误：请检查网络连接和API Key是否正确');
     throw e;
   }
 }
@@ -519,9 +549,14 @@ function renderGenerator(){
     h+=`</div>`;
   });
 
+  // Demo presets
+  h+=`<div class="demo-presets"><span style="font-size:11px;color:var(--text3);line-height:30px;margin-right:4px">⚡ 快速预设：</span>`;
+  demoPresets.forEach((p,i)=>{h+=`<button class="demo-btn" onclick="loadPreset(${i})">${p.name}</button>`});
+  h+=`</div>`;
+
   // Selected tags bar
   h+=`<div class="gen-sel">`;
-  if(!genSel.length) h+=`<span style="color:var(--text3);font-size:12px">👆 点击上方标签，选择2-6个组合你的故事DNA</span>`;
+  if(!genSel.length) h+=`<span style="color:var(--text3);font-size:12px">👆 点击上方标签或使用快速预设，选择2-6个组合你的故事DNA</span>`;
   else genSel.forEach((t,i)=>{h+=`<span class="gen-sel-tag" onclick="removeGenTag(${i})" title="点击移除">${genTagLabel(t.cat,t.val)} ✕</span>`});
   h+=`<span style="margin-left:auto;font-size:11px;color:${genSel.length>=2?'var(--green)':'var(--text3)'};font-weight:700">${genSel.length}/6</span></div>`;
 
@@ -564,7 +599,7 @@ function renderGenerator(){
 
   // Loading or Results
   if(genLoading){
-    h+=`<div class="gen-loading">正在生成故事创意，请稍候（约15-30秒）...</div>`;
+    h+=`<div class="gen-loading-fancy"><div class="spinner"></div><div class="msg">🎬 正在创作故事...</div><div class="sub">匹配 ${works.length} 部作品 × ${rules.length} 条规律，约15-30秒</div></div>`;
   }else if(genResults.length){
     h+=`<h2 style="font-size:16px;color:var(--accent2);margin:18px 0 12px">🎯 生成结果 (${genResults.length}个)</h2>`;
     h+=`<div class="grid g2">`;
