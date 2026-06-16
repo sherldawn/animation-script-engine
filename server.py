@@ -39,7 +39,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         messages.extend(body.get('messages', []))
 
         payload = {
-            'model': body.get('model', 'anthropic/claude-opus-4'),
+            'model': body.get('model', 'anthropic/claude-opus-4.6'),
             'max_tokens': body.get('max_tokens', 4096),
             'messages': messages,
         }

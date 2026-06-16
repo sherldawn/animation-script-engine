@@ -319,7 +319,7 @@ let wsLoading=false;
 // 10b. Persistence
 function getApiKey(){return localStorage.getItem('dash_apiKey')||''}
 function setApiKey(k){localStorage.setItem('dash_apiKey',k)}
-function getModel(){return localStorage.getItem('dash_model')||'anthropic/claude-opus-4'}
+function getModel(){return localStorage.getItem('dash_model')||'anthropic/claude-opus-4.6'}
 function setModel(m){localStorage.setItem('dash_model',m)}
 
 // 10c. Label helpers
@@ -519,12 +519,11 @@ function renderGenerator(){
     <span class="status" style="color:${key?'var(--green)':'var(--text3)'}">${key?'✅ 已保存':'未设置'}</span>
     <span style="font-size:11px;color:var(--text3);margin-left:8px">模型:</span>
     <select id="gen-model-sel" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:4px 8px;border-radius:6px;font-size:12px" onchange="setModel(this.value)">
-      <option value="anthropic/claude-opus-4" ${getModel()==='anthropic/claude-opus-4'?'selected':''}>Claude Opus 4</option>
-      <option value="anthropic/claude-sonnet-4-20250514" ${getModel()==='anthropic/claude-sonnet-4-20250514'?'selected':''}>Claude Sonnet 4</option>
-      <option value="anthropic/claude-3.5-sonnet" ${getModel()==='anthropic/claude-3.5-sonnet'?'selected':''}>Claude 3.5 Sonnet</option>
+      <option value="anthropic/claude-opus-4.6" ${getModel()==='anthropic/claude-opus-4.6'?'selected':''}>Claude Opus 4.6</option>
+      <option value="anthropic/claude-sonnet-4.6" ${getModel()==='anthropic/claude-sonnet-4.6'?'selected':''}>Claude Sonnet 4.6</option>
       <option value="openai/gpt-4o" ${getModel()==='openai/gpt-4o'?'selected':''}>GPT-4o</option>
       <option value="openai/gpt-4o-mini" ${getModel()==='openai/gpt-4o-mini'?'selected':''}>GPT-4o Mini</option>
-      <option value="google/gemini-2.5-flash-preview" ${getModel()==='google/gemini-2.5-flash-preview'?'selected':''}>Gemini 2.5 Flash</option>
+      <option value="google/gemini-2.5-flash" ${getModel()==='google/gemini-2.5-flash'?'selected':''}>Gemini 2.5 Flash</option>
       <option value="deepseek/deepseek-chat" ${getModel()==='deepseek/deepseek-chat'?'selected':''}>DeepSeek V3</option>
     </select>
     <a href="https://openrouter.ai/keys" target="_blank" style="font-size:11px;margin-left:4px">获取Key ↗</a>
