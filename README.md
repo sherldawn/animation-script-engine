@@ -2,7 +2,7 @@
 
 > 拆解98部全球经典动画短片，提炼15条创作规律，用AI工具在2分钟内讲一个好故事。
 
-**[👉 在线体验（GitHub Pages）](#)** · **[项目介绍](项目介绍.md)**
+**[👉 在线体验（GitHub Pages）](https://sherldawn.github.io/animation-script-engine/)** · **[项目介绍](docs/项目介绍.md)**
 
 ---
 
@@ -34,8 +34,8 @@
 ### 方式2：克隆仓库
 
 ```bash
-git clone https://github.com/你的用户名/2min-animation-dashboard.git
-cd 2min-animation-dashboard
+git clone https://github.com/sherldawn/animation-script-engine.git
+cd animation-script-engine
 
 # 直接打开
 open dashboard.html

@@ -1,3 +1,5 @@
 .DS_Store
 *.swp
 小红书视频脚本.md
+.claude/
+.vscode/
