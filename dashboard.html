@@ -316,11 +316,85 @@ let wsItem=null;
 let wsMsgs=[];
 let wsLoading=false;
 
-// 10b. Persistence
+// 10b. API Provider config + Persistence
+const API_PROVIDERS={
+  openrouter:{name:'OpenRouter',baseUrl:'https://openrouter.ai/api/v1/chat/completions',
+    hint:'sk-or-v1-...',keyUrl:'https://openrouter.ai/keys',
+    headers:k=>({'Content-Type':'application/json','Authorization':'Bearer '+k,'HTTP-Referer':location.href,'X-Title':'2min Animation Dashboard'}),
+    models:[{id:'anthropic/claude-opus-4.6',name:'Claude Opus 4.6'},{id:'google/gemini-2.5-flash',name:'Gemini 2.5 Flash'},{id:'deepseek/deepseek-chat',name:'DeepSeek V3'},{id:'anthropic/claude-sonnet-4',name:'Claude Sonnet 4'},{id:'openai/gpt-4.1-mini',name:'GPT-4.1 Mini'}],
+    body:(model,msgs,max)=>({model,max_tokens:max,messages:msgs}),
+    parse:d=>d.choices?.[0]?.message?.content||''},
+  openai:{name:'OpenAI',baseUrl:'https://api.openai.com/v1/chat/completions',
+    hint:'sk-...',keyUrl:'https://platform.openai.com/api-keys',
+    headers:k=>({'Content-Type':'application/json','Authorization':'Bearer '+k}),
+    models:[{id:'gpt-4.1',name:'GPT-4.1'},{id:'gpt-4.1-mini',name:'GPT-4.1 Mini'},{id:'gpt-4.1-nano',name:'GPT-4.1 Nano'},{id:'o3-mini',name:'o3-mini'}],
+    body:(model,msgs,max)=>({model,max_tokens:max,messages:msgs}),
+    parse:d=>d.choices?.[0]?.message?.content||''},
+  anthropic:{name:'Anthropic',baseUrl:'https://api.anthropic.com/v1/messages',
+    hint:'sk-ant-...',keyUrl:'https://console.anthropic.com/settings/keys',
+    headers:k=>({'Content-Type':'application/json','x-api-key':k,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'}),
+    models:[{id:'claude-opus-4-20250514',name:'Claude Opus 4'},{id:'claude-sonnet-4-20250514',name:'Claude Sonnet 4'},{id:'claude-3-5-haiku-20241022',name:'Claude 3.5 Haiku'}],
+    body:(model,msgs,max)=>{const sys=msgs.filter(m=>m.role==='system').map(m=>m.content).join('\n');return{model,max_tokens:max,system:sys||undefined,messages:msgs.filter(m=>m.role!=='system')}},
+    parse:d=>d.content?.[0]?.text||''},
+  deepseek:{name:'DeepSeek',baseUrl:'https://api.deepseek.com/chat/completions',
+    hint:'sk-...',keyUrl:'https://platform.deepseek.com/api_keys',
+    headers:k=>({'Content-Type':'application/json','Authorization':'Bearer '+k}),
+    models:[{id:'deepseek-chat',name:'DeepSeek V3'},{id:'deepseek-reasoner',name:'DeepSeek R1'}],
+    body:(model,msgs,max)=>({model,max_tokens:max,messages:msgs}),
+    parse:d=>d.choices?.[0]?.message?.content||''},
+  custom:{name:'自定义接口',baseUrl:'',
+    hint:'your-api-key',keyUrl:'',
+    headers:k=>({'Content-Type':'application/json','Authorization':'Bearer '+k}),
+    models:[],
+    body:(model,msgs,max)=>({model,max_tokens:max,messages:msgs}),
+    parse:d=>d.choices?.[0]?.message?.content||d.content?.[0]?.text||''}
+};
+
+function getProvider(){return localStorage.getItem('dash_provider')||'openrouter'}
+function setProvider(p){localStorage.setItem('dash_provider',p)}
 function getApiKey(){return localStorage.getItem('dash_apiKey')||''}
 function setApiKey(k){localStorage.setItem('dash_apiKey',k)}
-function getModel(){return localStorage.getItem('dash_model')||'anthropic/claude-opus-4.6'}
+function getModel(){return localStorage.getItem('dash_model')||API_PROVIDERS[getProvider()].models[0]?.id||''}
 function setModel(m){localStorage.setItem('dash_model',m)}
+function getCustomUrl(){return localStorage.getItem('dash_customUrl')||''}
+function setCustomUrl(u){localStorage.setItem('dash_customUrl',u)}
+function getCustomModel(){return localStorage.getItem('dash_customModel')||''}
+function setCustomModel(m){localStorage.setItem('dash_customModel',m)}
+
+// Auto-detect provider from key prefix
+function detectProvider(key){
+  if(!key) return null;
+  if(key.startsWith('sk-or-')) return 'openrouter';
+  if(key.startsWith('sk-ant-')) return 'anthropic';
+  // sk- could be OpenAI, DeepSeek, or others — don't auto-switch
+  return null;
+}
+function clearAllData(){
+  if(!confirm('确定要清除所有本地数据？（API Key、生成结果、对话记录都会被删除）')) return;
+  ['dash_apiKey','dash_model','dash_provider','dash_customUrl','dash_customModel','dash_genResults','dash_genSel','dash_wsItem','dash_wsMsgs'].forEach(k=>localStorage.removeItem(k));
+  genSel=[];genResults=[];wsItem=null;wsMsgs=[];genView='generate';
+  renderGenerator();
+}
+
+// Provider change handler
+function onProviderChange(provId){
+  setProvider(provId);
+  // Reset model to first available for new provider
+  const prov=API_PROVIDERS[provId];
+  if(prov.models.length) setModel(prov.models[0].id);
+  renderGenerator();
+}
+// Key input auto-detect handler
+function onKeyInput(key){
+  const detected=detectProvider(key);
+  if(detected && detected!==getProvider()){
+    setProvider(detected);
+    const prov=API_PROVIDERS[detected];
+    if(prov.models.length) setModel(prov.models[0].id);
+  }
+  setApiKey(key);
+  renderGenerator();
+}
 
 // 10c. Label helpers
 function genTagLabel(cat,val){
@@ -445,23 +519,27 @@ function buildChatSystemPrompt(){
   return s;
 }
 
-// 10g. API calls (Direct to OpenRouter — no proxy needed)
+// 10g. API calls (Multi-platform: OpenRouter / OpenAI / Anthropic / DeepSeek / Custom)
 async function callAPI(system,messages){
   const key=getApiKey();
-  if(!key) throw new Error('请先设置OpenRouter API Key');
+  if(!key) throw new Error('请先设置 API Key');
+  const provId=getProvider();
+  const prov=API_PROVIDERS[provId];
+  if(!prov) throw new Error('未知的API平台: '+provId);
+
   const allMessages=[];
   if(system) allMessages.push({role:'system',content:system});
   allMessages.push(...messages);
+
+  const model=getModel();
+  const baseUrl=provId==='custom'?getCustomUrl():prov.baseUrl;
+  if(!baseUrl) throw new Error('请设置API接口地址');
+
   try{
-    const resp=await fetch('https://openrouter.ai/api/v1/chat/completions',{
+    const resp=await fetch(baseUrl,{
       method:'POST',
-      headers:{
-        'Content-Type':'application/json',
-        'Authorization':'Bearer '+key,
-        'HTTP-Referer':location.href,
-        'X-Title':'2min Animation Dashboard'
-      },
-      body:JSON.stringify({model:getModel(),max_tokens:4096,messages:allMessages})
+      headers:prov.headers(key),
+      body:JSON.stringify(prov.body(model,allMessages,4096))
     });
     if(!resp.ok){
       const err=await resp.json().catch(()=>({error:`HTTP ${resp.status}`}));
@@ -469,7 +547,7 @@ async function callAPI(system,messages){
       throw new Error(typeof em==='string'?em:JSON.stringify(em));
     }
     const data=await resp.json();
-    return data.choices?.[0]?.message?.content||'';
+    return prov.parse(data);
   }catch(e){
     if(e.message==='Failed to fetch'||e.message.includes('NetworkError'))
       throw new Error('网络错误：请检查网络连接和API Key是否正确');
@@ -511,19 +589,34 @@ function renderGenerator(){
   const key=getApiKey();
   let h='';
 
-  // API Key + Model selector (OpenRouter)
-  h+=`<div class="gen-api">
-    <span style="font-size:12px;font-weight:700;color:var(--accent2)">🔑 OpenRouter API Key</span>
-    <input type="password" id="gen-api-input" value="${key}" placeholder="sk-or-v1-...">
-    <button onclick="setApiKey(document.getElementById('gen-api-input').value);renderGenerator()">保存</button>
-    <span class="status" style="color:${key?'var(--green)':'var(--text3)'}">${key?'✅ 已保存':'未设置'}</span>
-    <span style="font-size:11px;color:var(--text3);margin-left:8px">模型:</span>
-    <select id="gen-model-sel" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:4px 8px;border-radius:6px;font-size:12px" onchange="setModel(this.value)">
-      <option value="anthropic/claude-opus-4.6" ${getModel()==='anthropic/claude-opus-4.6'?'selected':''}>Claude Opus 4.6</option>
-      <option value="google/gemini-2.5-flash" ${getModel()==='google/gemini-2.5-flash'?'selected':''}>Gemini 2.5 Flash</option>
-      <option value="deepseek/deepseek-chat" ${getModel()==='deepseek/deepseek-chat'?'selected':''}>DeepSeek V3</option>
-    </select>
-    <a href="https://openrouter.ai/keys" target="_blank" style="font-size:11px;margin-left:4px">获取Key ↗</a>
+  // API Provider + Key + Model selector (Multi-platform)
+  const curProv=getProvider();
+  const prov=API_PROVIDERS[curProv];
+  const curModel=getModel();
+  h+=`<div class="gen-api" style="flex-direction:column;align-items:stretch;gap:10px">
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <span style="font-size:12px;font-weight:700;color:var(--accent2)">🔌 平台</span>
+      <select id="gen-provider-sel" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:5px 10px;border-radius:6px;font-size:12px;font-weight:600" onchange="onProviderChange(this.value)">
+        ${Object.entries(API_PROVIDERS).map(([k,v])=>`<option value="${k}" ${curProv===k?'selected':''}>${v.name}</option>`).join('')}
+      </select>
+      <span style="font-size:12px;font-weight:700;color:var(--accent2);margin-left:8px">🔑 Key</span>
+      <input type="password" id="gen-api-input" value="${key}" placeholder="${prov.hint}" style="flex:1;min-width:200px"
+        onchange="onKeyInput(this.value)">
+      <button onclick="setApiKey(document.getElementById('gen-api-input').value);renderGenerator()">保存</button>
+      <span class="status" style="color:${key?'var(--green)':'var(--text3)'}">${key?'✅ 已保存':'未设置'}</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <span style="font-size:12px;font-weight:700;color:var(--accent2)">🤖 模型</span>
+      <select id="gen-model-sel" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:5px 10px;border-radius:6px;font-size:12px;min-width:200px" onchange="setModel(this.value)">
+        ${prov.models.map(m=>`<option value="${m.id}" ${curModel===m.id?'selected':''}>${m.name}</option>`).join('')}
+        ${curProv==='custom'?`<option value="${getCustomModel()||'custom-model'}" selected>${getCustomModel()||'自定义模型'}</option>`:''}
+      </select>
+      ${curProv==='custom'?`<input type="text" id="gen-custom-url" value="${getCustomUrl()}" placeholder="https://your-api.com/v1/chat/completions" style="flex:1;min-width:240px" onchange="setCustomUrl(this.value)">
+      <input type="text" id="gen-custom-model" value="${getCustomModel()}" placeholder="模型名" style="width:140px" onchange="setCustomModel(this.value);setModel(this.value)">`:''}
+      ${prov.keyUrl?`<a href="${prov.keyUrl}" target="_blank" style="font-size:11px;margin-left:auto">获取${prov.name} Key ↗</a>`:''}
+      <button onclick="clearAllData()" style="margin-left:4px;border-color:var(--red);color:var(--red);font-size:11px" title="清除API Key、生成结果、对话记录">🗑️ 清除全部数据</button>
+    </div>
+    <div style="font-size:10px;color:var(--text3);line-height:1.5">⚠️ API Key保存在浏览器本地，不会上传到任何服务器。如使用公共电脑，请用完后点击"清除全部数据"。</div>
   </div>`;
 
   // Tag categories
@@ -602,14 +695,14 @@ function renderGenerator(){
     genResults.forEach((c,i)=>{
       const hasError=c.title?.startsWith('❌')||c.title?.startsWith('⚠️');
       h+=`<div class="gen-result" ${hasError?'style="border-color:var(--red)"':''}>`;
-      h+=`<h3>${c.title||'未命名'}</h3>`;
-      if(c.rule||c.dna) h+=`<div class="gen-meta">${c.rule||''} ${c.dna?' · '+c.dna:''}</div>`;
-      if(c.liner) h+=`<p style="font-size:12px;color:var(--gold);margin:4px 0">💡 ${c.liner}</p>`;
-      h+=`<div class="gen-story">${(c.story||'').replace(/\n/g,'<br>')}</div>`;
-      if(c.visual) h+=`<p style="font-size:11px;color:var(--accent2);margin:4px 0">🎬 记忆点: ${c.visual}</p>`;
-      if(c.benchmark) h+=`<p style="font-size:11px;color:var(--text3)">📊 最像: ${c.benchmark}</p>`;
-      if(c.checklist?.length) h+=`<div style="font-size:11px;color:var(--text3);margin:6px 0">${c.checklist.join(' ')}</div>`;
-      if(c.checklistScore!==undefined) h+=`<div style="font-size:12px;color:var(--green);font-weight:700">✅ ${c.checklistScore}/12</div>`;
+      h+=`<h3>${escHtml(c.title||'未命名')}</h3>`;
+      if(c.rule||c.dna) h+=`<div class="gen-meta">${escHtml(c.rule||'')} ${c.dna?' · '+escHtml(c.dna):''}</div>`;
+      if(c.liner) h+=`<p style="font-size:12px;color:var(--gold);margin:4px 0">💡 ${escHtml(c.liner)}</p>`;
+      h+=`<div class="gen-story">${escHtml(c.story||'')}</div>`;
+      if(c.visual) h+=`<p style="font-size:11px;color:var(--accent2);margin:4px 0">🎬 记忆点: ${escHtml(c.visual)}</p>`;
+      if(c.benchmark) h+=`<p style="font-size:11px;color:var(--text3)">📊 最像: ${escHtml(c.benchmark)}</p>`;
+      if(c.checklist?.length) h+=`<div style="font-size:11px;color:var(--text3);margin:6px 0">${c.checklist.map(x=>escHtml(x)).join(' ')}</div>`;
+      if(c.checklistScore!==undefined) h+=`<div style="font-size:12px;color:var(--green);font-weight:700">✅ ${parseInt(c.checklistScore)||0}/12</div>`;
       if(!hasError){
         h+=`<div class="gen-acts">
           <button class="primary" onclick="selectForWorkshop(${i})">👍 选入共创</button>
@@ -639,14 +732,14 @@ function renderWorkshop(){
     <button class="fbtn" style="border-color:var(--red);color:var(--red)" onclick="if(confirm('确定清除当前对话记录？')){wsMsgs=[];localStorage.removeItem('dash_wsMsgs');renderWorkshop()}">🗑️ 清除对话</button>
   </div>`;
 
-  // Concept card
+  // Concept card (all fields escaped)
   h+=`<div class="chat-concept">
-    <h3>${wsItem.title||'未命名'}</h3>
-    <p><strong style="color:var(--gold)">${wsItem.liner||''}</strong></p>
+    <h3>${escHtml(wsItem.title||'未命名')}</h3>
+    <p><strong style="color:var(--gold)">${escHtml(wsItem.liner||'')}</strong></p>
     <details><summary style="font-size:11px;color:var(--accent2);margin-top:4px">展开完整梗概</summary>
-    <div style="font-size:12px;color:var(--text2);padding:8px 0;line-height:1.7">${(wsItem.story||'').replace(/\n/g,'<br>')}</div>
+    <div style="font-size:12px;color:var(--text2);padding:8px 0;line-height:1.7">${escHtml(wsItem.story||'')}</div>
     </details>
-    ${wsItem.rule?`<div style="font-size:11px;color:var(--text3);margin-top:4px">📐 ${wsItem.rule} ${wsItem.dna?' · 🧬 '+wsItem.dna:''}</div>`:''}
+    ${wsItem.rule?`<div style="font-size:11px;color:var(--text3);margin-top:4px">📐 ${escHtml(wsItem.rule)} ${wsItem.dna?' · 🧬 '+escHtml(wsItem.dna):''}</div>`:''}
   </div>`;
 
   // Chat
