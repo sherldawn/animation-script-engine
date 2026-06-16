@@ -74,11 +74,11 @@ const creativeIdeas = [
   {
     id: 1,
     num: "001",
-    title: "火锅毛肚大战 → 猫之功夫幻想",
+    title: "迭代示例：从25%到100%的改编过程",
     status: "discussion",
-    statusLabel: "🔄 讨论中（V4完成，待确认）",
-    mdFile: "剧本/001-火锅毛肚大战.md",
-    oneLiner: "两只家猫看武侠片被罐头触发脑内功夫对决——激光笔打断一切",
+    statusLabel: "📖 教学案例",
+    mdFile: "examples/001-猫之功夫幻想.md",
+    oneLiner: "展示一个原始想法如何通过公式检查清单，从通过率25%迭代到100%",
     phases: [
       {
         title: "💡 原始想法",

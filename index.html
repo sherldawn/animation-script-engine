@@ -150,7 +150,7 @@ details>.inner strong{color:var(--text)}.bl{border-left:3px solid var(--accent2)
 <div class="sec" id="s-structures"><h1>🏗️ 七种叙事结构</h1><p class="sub">适合2分钟以下的可复用叙事模板</p><div class="frow" id="r-struct-tabs"></div><div class="card" id="r-struct-display"></div></div>
 <div class="sec" id="s-directions"><h1>🧭 7个创作方向</h1><p class="sub">按成功概率排序</p><div class="grid g3" id="r-dir-grid"></div></div>
 <div class="sec" id="s-generator"><h1>🎰 故事生成器</h1><p class="sub">选择2-6个标签组合你的故事DNA，AI自动生成3-5个故事梗概 · 支持规律轮盘 / DNA混搭 / 一键对标</p><div id="r-generator"></div></div>
-<div class="sec" id="s-creative"><h1>🎨 创意工坊</h1><p class="sub">从原始想法到可执行剧本的完整迭代记录</p><div id="r-creative"></div></div>
+<div class="sec" id="s-creative"><h1>📖 迭代示例</h1><p class="sub">一个想法如何通过检查清单从通过率25%改编到100% — 展示公式的实际用法</p><div id="r-creative"></div></div>
 <div class="sec" id="s-batch"><h1>🎲 批量创意库</h1><p class="sub">V2.0公式拼配，点击展开完整故事</p><div class="stats" id="r-batch-stats"></div><div class="frow" id="r-batch-filters"></div><div class="count" id="r-batch-count"></div><div class="grid g2" id="r-batch-grid"></div></div>
 
 <script>
@@ -1127,11 +1127,11 @@ const creativeIdeas = [
   {
     id: 1,
     num: "001",
-    title: "火锅毛肚大战 → 猫之功夫幻想",
+    title: "迭代示例：从25%到100%的改编过程",
     status: "discussion",
-    statusLabel: "🔄 讨论中（V4完成，待确认）",
-    mdFile: "剧本/001-火锅毛肚大战.md",
-    oneLiner: "两只家猫看武侠片被罐头触发脑内功夫对决——激光笔打断一切",
+    statusLabel: "📖 教学案例",
+    mdFile: "examples/001-猫之功夫幻想.md",
+    oneLiner: "展示一个原始想法如何通过公式检查清单，从通过率25%迭代到100%",
     phases: [
       {
         title: "💡 原始想法",
@@ -2308,10 +2308,13 @@ function renderWorkshop(){
   if(!wsItem){genView='generate';return renderGenerator();}
   let h='';
 
-  // Back button
-  h+=`<div style="display:flex;gap:10px;margin-bottom:12px;align-items:center">
+  // Back button + actions
+  h+=`<div style="display:flex;gap:10px;margin-bottom:12px;align-items:center;flex-wrap:wrap">
     <button class="fbtn" onclick="genView='generate';renderGenerator()">← 返回生成器</button>
     <span style="font-size:13px;color:var(--accent2);font-weight:700">💬 AI共创对话</span>
+    <span style="flex:1"></span>
+    <button class="fbtn" style="border-color:var(--green);color:var(--green)" onclick="downloadScript()">📥 导出剧本</button>
+    <button class="fbtn" style="border-color:var(--red);color:var(--red)" onclick="if(confirm('确定清除当前对话记录？')){wsMsgs=[];localStorage.removeItem('dash_wsMsgs');renderWorkshop()}">🗑️ 清除对话</button>
   </div>`;
 
   // Concept card
@@ -2446,7 +2449,68 @@ async function doChatSend(){
   wsLoading=false; renderWorkshop();
 }
 
+// ---- PERSISTENCE: localStorage for generator results & workshop chat ----
+function saveGenState(){
+  try{
+    if(genResults.length) localStorage.setItem('dash_genResults',JSON.stringify(genResults));
+    if(genSel.length) localStorage.setItem('dash_genSel',JSON.stringify(genSel));
+  }catch(e){}
+}
+function saveWsState(){
+  try{
+    if(wsItem) localStorage.setItem('dash_wsItem',JSON.stringify(wsItem));
+    if(wsMsgs.length) localStorage.setItem('dash_wsMsgs',JSON.stringify(wsMsgs));
+  }catch(e){}
+}
+function loadSavedState(){
+  try{
+    const sel=localStorage.getItem('dash_genSel');
+    const res=localStorage.getItem('dash_genResults');
+    const item=localStorage.getItem('dash_wsItem');
+    const msgs=localStorage.getItem('dash_wsMsgs');
+    if(sel) genSel=JSON.parse(sel);
+    if(res) genResults=JSON.parse(res);
+    if(item) wsItem=JSON.parse(item);
+    if(msgs) wsMsgs=JSON.parse(msgs);
+  }catch(e){}
+}
+// Hook into existing functions to auto-save
+const _origDoGenerate=doGenerate;
+doGenerate=async function(){await _origDoGenerate();saveGenState()};
+const _origDoChatSend=doChatSend;
+doChatSend=async function(){await _origDoChatSend();saveWsState()};
+const _origSelectForWorkshop=selectForWorkshop;
+selectForWorkshop=function(idx){_origSelectForWorkshop(idx);saveWsState()};
+
+// ---- DOWNLOAD: Export workshop script as Markdown ----
+function downloadScript(){
+  if(!wsItem) return;
+  let md=`# ${wsItem.title||'未命名剧本'}\n\n`;
+  if(wsItem.liner) md+=`> ${wsItem.liner}\n\n`;
+  if(wsItem.rule) md+=`**核心规律**: ${wsItem.rule}\n`;
+  if(wsItem.dna) md+=`**DNA混搭**: ${wsItem.dna}\n`;
+  if(wsItem.benchmark) md+=`**最像**: ${wsItem.benchmark}\n`;
+  md+=`\n## 梗概\n\n${wsItem.story||''}\n\n`;
+  if(wsItem.checklist?.length){
+    md+=`## 检查清单\n\n${wsItem.checklist.join('\n')}\n\n`;
+  }
+  if(wsMsgs.length){
+    md+=`## 共创对话记录\n\n`;
+    wsMsgs.forEach(m=>{
+      md+=m.role==='user'?`### 👤 用户\n\n${m.content}\n\n`:`### 🤖 AI编剧导师\n\n${m.content}\n\n`;
+    });
+  }
+  md+=`---\n*由 2min动画短片 · 调研与创作仪表盘 生成*\n`;
+  const blob=new Blob([md],{type:'text/markdown;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=(wsItem.title||'剧本').replace(/[/\\?%*:|"<>]/g,'')+'.md';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
 // ---- INIT ----
+loadSavedState();
 renderWorksFilters(); renderWorksGrid(); renderBatch(); renderGenerator();
 </script>
 </body>

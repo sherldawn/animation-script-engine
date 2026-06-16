@@ -175,23 +175,26 @@ server.py                   ← 可选的本地HTTP服务器
 
 ```
 ├── README.md                    ← 本文件
-├── 项目介绍.md                   ← 详细项目介绍
-├── CLAUDE.md                    ← AI助手系统指令
-├── dashboard.html               ← 仪表盘（需HTTP服务器加载JS）
-├── dashboard-standalone.html    ← 独立版（双击可用，推荐）
+├── index.html                   ← 独立版（JS内联，GitHub Pages入口）
+├── dashboard.html               ← 开发版（需HTTP服务器加载JS）
 ├── server.py                    ← 可选本地服务器
+├── CLAUDE.md                    ← AI助手系统指令
+├── LICENSE                      ← MIT许可证
+├── .gitignore
 ├── data/                        ← 7个数据文件（核心资产）
 │   ├── tags-registry.js         ← 66个标签
 │   ├── works.js                 ← 98部作品
-│   ├── config.js                ← 结构 + 方向 + 工坊
+│   ├── config.js                ← 结构 + 方向 + 迭代示例
 │   ├── batch-ideas.js           ← 20个批量创意
 │   ├── research.js              ← 调研数据
 │   ├── rules.js                 ← 15条规律 + 公式
 │   └── generator-config.js      ← 生成器配置
-├── 剧本/                        ← 示例剧本
-│   ├── 001-火锅毛肚大战.md
+├── examples/                    ← 示例剧本
+│   ├── 001-猫之功夫幻想.md
 │   └── 批量创意20.md
-└── 存档/                        ← 调研原始文档（8个MD文件）
+└── docs/                        ← 项目文档 + 调研原始文档
+    ├── 项目介绍.md
+    └── ...（8个MD调研文档）
 ```
 
 ---
