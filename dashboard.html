@@ -520,9 +520,6 @@ function renderGenerator(){
     <span style="font-size:11px;color:var(--text3);margin-left:8px">模型:</span>
     <select id="gen-model-sel" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:4px 8px;border-radius:6px;font-size:12px" onchange="setModel(this.value)">
       <option value="anthropic/claude-opus-4.6" ${getModel()==='anthropic/claude-opus-4.6'?'selected':''}>Claude Opus 4.6</option>
-      <option value="anthropic/claude-sonnet-4.6" ${getModel()==='anthropic/claude-sonnet-4.6'?'selected':''}>Claude Sonnet 4.6</option>
-      <option value="openai/gpt-4o" ${getModel()==='openai/gpt-4o'?'selected':''}>GPT-4o</option>
-      <option value="openai/gpt-4o-mini" ${getModel()==='openai/gpt-4o-mini'?'selected':''}>GPT-4o Mini</option>
       <option value="google/gemini-2.5-flash" ${getModel()==='google/gemini-2.5-flash'?'selected':''}>Gemini 2.5 Flash</option>
       <option value="deepseek/deepseek-chat" ${getModel()==='deepseek/deepseek-chat'?'selected':''}>DeepSeek V3</option>
     </select>
